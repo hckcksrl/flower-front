@@ -1,21 +1,28 @@
 import { createAppContainer, createBottomTabNavigator } from "react-navigation";
 import Header from "../component/Header/Header";
 import Home from "../screen/Home";
-import { Height, Width } from "../helper/Dimension";
+import Height, { Width } from "../helper/Dimension";
 
 const Navigation = createBottomTabNavigator(
   {
-    Home: {
+    Collection: {
       screen: Home,
       navigationOptions: {
-        tabBarLabel: "Hello",
+        tabBarLabel: "컬렉션",
         backgroundColor: "white"
       }
     },
-    Profile: {
+    Images: {
       screen: Header,
       navigationOptions: {
-        tabBarLabel: "View",
+        tabBarLabel: "탐구",
+        backgroundColor: "white"
+      }
+    },
+    Library: {
+      screen: Header,
+      navigationOptions: {
+        tabBarLabel: "라이브러리",
         backgroundColor: "white"
       }
     }
@@ -23,7 +30,7 @@ const Navigation = createBottomTabNavigator(
   {
     tabBarOptions: {
       style: {
-        height: Height * 0.067,
+        height: Height * 0.0695,
         width: Width
       }
     }
