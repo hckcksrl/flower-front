@@ -1,16 +1,55 @@
 import React from "react";
-import {
-  View,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  ScrollView
-} from "react-native";
-import { Width, Height } from "../../helper/Dimension";
+import { View, StyleSheet, Text, TouchableOpacity } from "react-native";
+import Height, { Width } from "../../helper/Dimension";
 import Flower from "../Flower/Flower";
+import Carousel from "react-native-snap-carousel";
+
+const flowers = [
+  {
+    id: 1,
+    url: require("../../../assets/1.jpg"),
+    smallname: "플라워",
+    bigname: "장미",
+    like: 230
+  },
+  {
+    id: 2,
+    url: require("../../../assets/2.jpg"),
+    smallname: "플라워",
+    bigname: "장미",
+    like: 200
+  },
+  {
+    id: 3,
+    url: require("../../../assets/3.jpg"),
+    smallname: "플라워",
+    bigname: "장미",
+    like: 150
+  },
+  {
+    id: 4,
+    url: require("../../../assets/4.jpg"),
+    smallname: "플라워",
+    bigname: "장미",
+    like: 350
+  },
+  {
+    id: 5,
+    url: require("../../../assets/1.jpg"),
+    smallname: "플라워",
+    bigname: "장미",
+    like: 230
+  }
+];
 
 class MainPresenter extends React.Component {
-  render() {
+  public carousel: any;
+
+  _renderItem = ({ item, index }) => {
+    return <Flower flowers={item} />;
+  };
+
+  public render() {
     return (
       <View style={styles.container}>
         <View style={styles.header}>
@@ -27,9 +66,17 @@ class MainPresenter extends React.Component {
             </TouchableOpacity>
           </View>
         </View>
-        <ScrollView style={styles.mainScroll} horizontal={true}>
-          <Flower />
-        </ScrollView>
+        <Carousel
+          ref={ref => (this.carousel = ref)}
+          data={flowers}
+          sliderWidth={Width}
+          itemWidth={Width * 0.92}
+          renderItem={this._renderItem}
+          style={styles.mainScroll}
+          layout={"default"}
+          useScrollView={true}
+          inactiveSlideScale={1}
+        />
       </View>
     );
   }
@@ -38,14 +85,17 @@ class MainPresenter extends React.Component {
 const styles = StyleSheet.create({
   container: {
     width: Width,
-    height: Height * 0.77,
-    paddingTop: Height * 0.03
+    height: Height * 0.7928
+    // paddingTop: Height * 0.0232,
   },
   header: {
+    borderTopWidth: 1,
+    borderColor: "#d8d8d8",
+    paddingTop: Height * 0.0232,
     marginHorizontal: Width * 0.04,
     display: "flex",
     flexDirection: "row",
-    paddingBottom: Height * 0.015
+    paddingBottom: Height * 0.0122
   },
   headerMain: {
     width: Width * 0.71
@@ -65,30 +115,8 @@ const styles = StyleSheet.create({
   },
   mainScroll: {
     width: Width,
-    height: Height * 0.69,
+    height: Height * 0.711,
     paddingLeft: 15
-  },
-  imageContainer: {
-    width: Width * 0.893,
-    height: Height * 0.6
-  },
-  image: {
-    width: Width * 0.893,
-    height: Height * 0.6,
-    borderRadius: 10
-  },
-  nameContainer: {
-    marginTop: 0.012 * Height
-  },
-  name: {
-    fontFamily: "NanumSquareR",
-    fontSize: Width * 0.04,
-    letterSpacing: 0.03
-  },
-  typeContainer: {
-    paddingBottom: Height * 0.022,
-    paddingTop: Height * 0.007,
-    borderBottomWidth: 1
   }
 });
 
