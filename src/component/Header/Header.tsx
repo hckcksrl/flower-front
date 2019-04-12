@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { View, StyleSheet } from "react-native";
 import Icon from "react-native-vector-icons/MaterialIcons";
-import { Width, Height } from "../../helper/Dimension";
+import Height, { Width } from "../../helper/Dimension";
 import { TouchableWithoutFeedback } from "react-native-gesture-handler";
 
 class Header extends Component {
@@ -21,7 +21,7 @@ class Header extends Component {
 const styles = StyleSheet.create({
   container: {
     display: "flex",
-    height: Height * 0.06,
+    height: Height * 0.0618,
     width: Width,
     justifyContent: "center"
   },
