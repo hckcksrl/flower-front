@@ -9,11 +9,15 @@
   "dependencies": {
     "@types/react": "^16.8.13",
     "@types/react-native": "^0.57.42",
+    "@types/react-native-snap-carousel": "^3.7.1",
     "@types/react-navigation": "^3.0.6",
     "react": "16.8.3",
     "react-native": "0.59.4",
     "react-native-gesture-handler": "^1.1.0",
+    "react-native-iphone-x-helper": "^1.2.0",
     "react-native-naver-font": "^1.0.0",
+    "react-native-snap-carousel": "^3.7.5",
+    "react-native-status-bar-height": "^2.3.1",
     "react-native-typescript-transformer": "^1.2.12",
     "react-native-vector-icons": "^6.4.2",
     "react-navigation": "^3.6.1"
