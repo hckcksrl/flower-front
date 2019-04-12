@@ -1,71 +1,71 @@
 import React from "react";
-import { View, Image, TouchableOpacity, Text, StyleSheet } from "react-native";
-import { Width, Height } from "../../helper/Dimension";
+import {
+  View,
+  Image,
+  TouchableOpacity,
+  Text,
+  StyleSheet,
+  ImageSourcePropType
+} from "react-native";
+import Height, { Width } from "../../helper/Dimension";
 
-class Flower extends React.Component {
-  render() {
-    return (
+interface IProps {
+  flowers: {
+    url: ImageSourcePropType;
+    id: number;
+    smallname: string;
+    bigname: string;
+  };
+}
+const Flower: React.SFC<IProps> = (props: IProps) => {
+  return (
+    <View style={styles.main}>
       <View>
-        <View style={styles.imageContainer}>
-          <View>
-            <TouchableOpacity
-              onPress={() => {
-                console.log("이미지");
-              }}
-            >
-              <Image
-                source={require("../../../assets/1.jpg")}
-                style={styles.image}
-                resizeMode="cover"
-              />
-            </TouchableOpacity>
-          </View>
-        </View>
         <View>
-          <View style={styles.nameContainer}>
-            <Text style={styles.name}>오로라</Text>
-          </View>
+          <TouchableOpacity
+            onPress={() => {
+              console.log(Height);
+            }}
+          >
+            <Image
+              source={props.flowers.url}
+              style={styles.image}
+              resizeMode="cover"
+            />
+          </TouchableOpacity>
+        </View>
+      </View>
+      <View>
+        <View style={styles.nameContainer}>
+          <Text style={styles.name}>{props.flowers.smallname}</Text>
+        </View>
+        <View style={styles.typeContainer}>
           <TouchableOpacity
             onPress={() => {
               console.log("장미");
             }}
           >
-            <View style={styles.typeContainer}>
-              <Text style={[styles.name, { color: "#3b74ff" }]}>장미</Text>
-            </View>
+            <Text style={[styles.name, { color: "#3b74ff" }]}>
+              {props.flowers.smallname}
+            </Text>
           </TouchableOpacity>
         </View>
       </View>
-    );
-  }
-}
+    </View>
+  );
+};
 
 const styles = StyleSheet.create({
-  headerRight: {
-    justifyContent: "flex-end",
-    alignItems: "flex-start"
-  },
-  headerTouch: {
-    fontFamily: "NanumSquareB",
-    fontSize: Width * 0.04,
-    color: "#3b74ff"
-  },
-  mainScroll: {
-    width: Width,
-    height: Height * 0.69,
-    paddingLeft: 15
-  },
-  imageContainer: {
-    width: Width * 0.893,
-    height: Height * 0.6
+  main: {
+    borderRadius: 10
   },
   image: {
     width: Width * 0.893,
-    height: Height * 0.6,
+    height: Height * 0.618,
     borderRadius: 10
   },
   nameContainer: {
-    marginTop: 0.012 * Height
+    paddingTop: 0.012 * Height
   },
   name: {
     fontFamily: "NanumSquareR",
@@ -73,9 +73,8 @@ const styles = StyleSheet.create({
     letterSpacing: 0.03
   },
   typeContainer: {
-    paddingBottom: Height * 0.022,
-    paddingTop: Height * 0.007,
-    borderBottomWidth: 1
+    paddingBottom: Height * 0.0231,
+    paddingTop: Height * 0.0077
   }
 });
 
