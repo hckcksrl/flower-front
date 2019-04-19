@@ -1,60 +1,63 @@
 import React from "react";
-import {
-  View,
-  Image,
-  TouchableOpacity,
-  Text,
-  StyleSheet,
-  ImageSourcePropType
-} from "react-native";
+import { View, Image, TouchableOpacity, Text, StyleSheet } from "react-native";
 import Height, { Width } from "../../helper/Dimension";
+import { NavigationScreenProp } from "react-navigation";
 
 interface IProps {
   flowers: {
-    url: ImageSourcePropType;
     id: number;
-    smallname: string;
-    bigname: string;
+    image: string;
+    name: string;
+    type: {
+      id: number;
+      name: string;
+    };
   };
+  navigation: NavigationScreenProp<any, any>;
 }
-const Flower: React.SFC<IProps> = (props: IProps) => {
-  return (
-    <View style={styles.main}>
-      <View>
+class Flower extends React.Component<IProps> {
+  render() {
+    const { flowers, navigation } = this.props;
+    return (
+      <View style={styles.main}>
         <View>
-          <TouchableOpacity
-            onPress={() => {
-              console.log(Height);
-            }}
-          >
-            <Image
-              source={props.flowers.url}
-              style={styles.image}
-              resizeMode="cover"
-            />
-          </TouchableOpacity>
+          <View>
+            <TouchableOpacity
+              onPress={() => {
+                navigation.navigate("SelectFlowers");
+              }}
+            >
+              <Image
+                source={{ uri: flowers.image }}
+                style={styles.image}
+                resizeMode="cover"
+              />
+            </TouchableOpacity>
+          </View>
+        </View>
+        <View>
+          <View style={styles.nameContainer}>
+            <Text style={styles.name}>{flowers.name}</Text>
+          </View>
+          <View style={styles.typeContainer}>
+            <TouchableOpacity
+              onPress={() => {
+                navigation.navigate("TypeFlowers", {
+                  header: flowers.type.name,
+                  typeid: flowers.type.id
+                });
+              }}
+            >
+              <Text style={[styles.name, { color: "#3b74ff" }]}>
+                {flowers.type.name}
+              </Text>
+            </TouchableOpacity>
+          </View>
         </View>
       </View>
-      <View>
-        <View style={styles.nameContainer}>
-          <Text style={styles.name}>{props.flowers.smallname}</Text>
-        </View>
-        <View style={styles.typeContainer}>
-          <TouchableOpacity
-            onPress={() => {
-              console.log("장미");
-            }}
-          >
-            <Text style={[styles.name, { color: "#3b74ff" }]}>
-              {props.flowers.smallname}
-            </Text>
-          </TouchableOpacity>
-        </View>
-      </View>
-    </View>
-  );
-};
-
+    );
+  }
+}
 const styles = StyleSheet.create({
   main: {
     borderRadius: 10

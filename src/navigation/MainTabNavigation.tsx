@@ -1,26 +1,28 @@
-import { createAppContainer, createBottomTabNavigator } from "react-navigation";
-import Header from "../component/Header/Header";
-import Home from "../screen/Home";
+import { createBottomTabNavigator } from "react-navigation";
+import NavigationHeader from "../component/NavigationHeader";
 import Height, { Width } from "../helper/Dimension";
+import React from "react";
+import { FlowerListNavigation } from "./FlowerListNavigation";
+import Library from "../screen/Library";
 
-const Navigation = createBottomTabNavigator(
+export const TabNavigation = createBottomTabNavigator(
   {
     Collection: {
-      screen: Home,
+      screen: FlowerListNavigation,
       navigationOptions: {
         tabBarLabel: "컬렉션",
         backgroundColor: "white"
       }
     },
     Images: {
-      screen: Header,
+      screen: NavigationHeader,
       navigationOptions: {
         tabBarLabel: "탐구",
         backgroundColor: "white"
       }
     },
     Library: {
-      screen: Header,
+      screen: Library,
       navigationOptions: {
         tabBarLabel: "라이브러리",
         backgroundColor: "white"
@@ -36,5 +38,3 @@ const Navigation = createBottomTabNavigator(
     }
   }
 );
-
-export const AppContainer = createAppContainer(Navigation);

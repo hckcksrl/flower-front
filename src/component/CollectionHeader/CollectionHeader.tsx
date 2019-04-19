@@ -2,15 +2,13 @@ import React from "react";
 import { StyleSheet, View, Text } from "react-native";
 import Height, { Width } from "../../helper/Dimension";
 
-class MainHeader extends React.Component {
-  render() {
-    return (
-      <View style={styles.container}>
-        <Text style={styles.header}>컬렉션</Text>
-      </View>
-    );
-  }
-}
+const CollectionMain = () => {
+  return (
+    <View style={styles.container}>
+      <Text style={styles.header}>컬렉션</Text>
+    </View>
+  );
+};
 
 const styles = StyleSheet.create({
   container: {
@@ -28,4 +26,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default MainHeader;
+export default CollectionMain;
