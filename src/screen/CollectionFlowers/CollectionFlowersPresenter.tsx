@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import { View, StyleSheet, ScrollView, RefreshControl } from "react-native";
 import NavigationHeader from "../../component/NavigationHeader";
 import Height, { Width } from "../../helper/Dimension";

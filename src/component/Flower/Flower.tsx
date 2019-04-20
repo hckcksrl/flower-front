@@ -24,7 +24,9 @@ class Flower extends React.Component<IProps> {
           <View>
             <TouchableOpacity
               onPress={() => {
-                navigation.navigate("SelectFlowers");
+                navigation.navigate("SelectFlowers", {
+                  id: flowers.id
+                });
               }}
             >
               <Image

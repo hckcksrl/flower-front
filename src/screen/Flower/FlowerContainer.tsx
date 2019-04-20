@@ -1,7 +1,7 @@
 import React from "react";
 import { View } from "react-native";
 import gql from "graphql-tag";
-import { Query } from "react-apollo";
+import { Query, Mutation } from "react-apollo";
 import FlowerPresenter from "./FlowerPresenter";
 import { NavigationScreenProp } from "react-navigation";
 
@@ -19,6 +19,15 @@ const GetFlower = gql`
       }
       like
       like_count
+    }
+  }
+`;
+
+const isLike = gql`
+  mutation Like($flowerid: Int, $commentid: Int) {
+    Like(flowerid: $flowerid, commentid: $commentid) {
+      result
+      error
     }
   }
 `;
@@ -45,13 +54,33 @@ class FlowerContainer extends React.Component<Props, State> {
     });
   }
 
+  _complete = (data, refetch, id) => {
+    data({
+      variables: { flowerid: id }
+    }).then(() => refetch());
+  };
+
   render() {
-    const { navigation } = this.props;
     return (
-      <Query query={GetFlower} variables={{ id: 47 }}>
-        {({ data, loading }) => {
+      <Query query={GetFlower} variables={{ id: this.state.id }}>
+        {({ data, loading, refetch }) => {
+          const flower = data;
           if (loading) return <View />;
-          return <FlowerPresenter data={data} {...this.props} />;
+          return (
+            <Mutation mutation={isLike}>
+              {Like => {
+                return (
+                  <FlowerPresenter
+                    data={flower}
+                    {...this.props}
+                    refetch={refetch}
+                    like={Like}
+                    complete={this._complete}
+                  />
+                );
+              }}
+            </Mutation>
+          );
         }}
       </Query>
     );
