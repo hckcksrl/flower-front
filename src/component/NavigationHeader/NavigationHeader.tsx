@@ -25,7 +25,9 @@ export const NavigationHeader: React.SFC<IProps> = (props: IProps) => {
     return (
       <View style={styles.container}>
         <View style={styles.BackIconView}>
-          <TouchableWithoutFeedback onPress={() => props.navigation.goBack()}>
+          <TouchableWithoutFeedback
+            onPress={() => props.navigation.goBack(null)}
+          >
             <Icon name={props.header} color="#3b74ff" size={24} />
           </TouchableWithoutFeedback>
         </View>

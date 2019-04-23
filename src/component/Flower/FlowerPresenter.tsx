@@ -14,16 +14,18 @@ interface IProps {
     };
   };
   navigation: NavigationScreenProp<any, any>;
+  mutation: any;
 }
-class Flower extends React.Component<IProps> {
+class FlowerPresenter extends React.Component<IProps> {
   render() {
-    const { flowers, navigation } = this.props;
+    const { flowers, navigation, mutation } = this.props;
     return (
       <View style={styles.main}>
         <View>
           <View>
             <TouchableOpacity
               onPress={() => {
+                mutation({ variables: { id: flowers.id } });
                 navigation.navigate("SelectFlowers", {
                   id: flowers.id
                 });
@@ -83,4 +85,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default Flower;
+export default FlowerPresenter;

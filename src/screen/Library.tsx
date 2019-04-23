@@ -3,7 +3,7 @@ import NavigationHeader from "../component/NavigationHeader";
 import { StyleSheet, View } from "react-native";
 import { Width } from "../helper/Dimension";
 import { NavigationScreenProps } from "react-navigation";
-import Flower from "../component/Flower/Flower";
+import FlowerContainer from "../component/Flower/FlowerContainer";
 
 interface State {
   flowers: Array<{

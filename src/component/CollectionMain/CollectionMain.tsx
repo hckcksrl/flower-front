@@ -1,7 +1,7 @@
 import React from "react";
 import { View, StyleSheet, Text, TouchableOpacity } from "react-native";
 import Height, { Width } from "../../helper/Dimension";
-import Flower from "../Flower/Flower";
+import FlowerContainer from "../Flower/FlowerContainer";
 import Carousel from "react-native-snap-carousel";
 import gql from "graphql-tag";
 import { useQuery } from "react-apollo-hooks";
@@ -45,7 +45,7 @@ const CollectionMain: React.SFC<IProps> = (props: IProps) => {
     flowers = flowers.slice(0, 3);
   }
   const _renderItem = ({ item, index }) => {
-    return <Flower flowers={item} navigation={props.navigation} />;
+    return <FlowerContainer flowers={item} navigation={props.navigation} />;
   };
 
   return (

@@ -3,7 +3,7 @@ import { View } from "react-native";
 import { NavigationScreenProp } from "react-navigation";
 import { Query } from "react-apollo";
 import gql from "graphql-tag";
-import FlowersPresenter from "./CollectionFlowersPresenter";
+import CollectionPresenter from "./CollectionFlowersPresenter";
 
 const GetFlowers = gql`
   query GetFlowers($typeid: Int!) {
@@ -42,7 +42,7 @@ interface State {
   }>;
 }
 
-class FlowersContainer extends React.Component<Props, State> {
+class CollectionContainer extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = {
@@ -109,7 +109,7 @@ class FlowersContainer extends React.Component<Props, State> {
         {({ data, loading, refetch }) => {
           if (loading) return <View />;
           return (
-            <FlowersPresenter
+            <CollectionPresenter
               refresh={this._refresh}
               flowers={this.state.flowers}
               loading={this.state.loading}
@@ -124,4 +124,4 @@ class FlowersContainer extends React.Component<Props, State> {
   }
 }
 
-export default FlowersContainer;
+export default CollectionContainer;

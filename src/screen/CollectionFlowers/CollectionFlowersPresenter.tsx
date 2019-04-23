@@ -5,7 +5,7 @@ import Height, { Width } from "../../helper/Dimension";
 import { getStatusBarHeight } from "react-native-status-bar-height";
 import { NavigationScreenProp } from "react-navigation";
 import FlowerHeader from "../../component/FlowerHeader";
-import Flower from "../../component/Flower/Flower";
+import FlowerContainer from "../../component/Flower/FlowerContainer";
 
 interface Props {
   refresh: (refetch: any) => void;
@@ -27,7 +27,7 @@ interface State {
   fetch: boolean;
 }
 
-class FlowersPresenter extends React.Component<Props, State> {
+class CollectionPresenter extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = {
@@ -68,7 +68,7 @@ class FlowersPresenter extends React.Component<Props, State> {
             {flowers.map((flowers: any, key: any) => {
               return (
                 <View style={styles.main} key={key}>
-                  <Flower flowers={flowers} navigation={navigation} />
+                  <FlowerContainer flowers={flowers} navigation={navigation} />
                 </View>
               );
             })}
@@ -91,4 +91,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default FlowersPresenter;
+export default CollectionPresenter;

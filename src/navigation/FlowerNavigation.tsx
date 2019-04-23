@@ -1,7 +1,7 @@
 import { createStackNavigator } from "react-navigation";
 import { TabNavigation } from "./MainTabNavigation";
 import { createAppContainer } from "react-navigation";
-import FlowerContainer from "../screen/Flower";
+import FlowerPageContainer from "../screen/FlowerPage";
 
 export const FlowerNavigation = createStackNavigator(
   {
@@ -12,15 +12,14 @@ export const FlowerNavigation = createStackNavigator(
       }
     },
     SelectFlowers: {
-      screen: FlowerContainer,
-      path: "flower/id",
+      screen: FlowerPageContainer,
       navigationOptions: {
         header: null
       }
     }
   },
   {
-    mode: "modal"
+    // mode: "modal"
   }
 );
 
