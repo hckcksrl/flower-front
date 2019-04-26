@@ -1,7 +1,6 @@
 import { createBottomTabNavigator } from "react-navigation";
 import NavigationHeader from "../component/NavigationHeader";
 import Height, { Width } from "../helper/Dimension";
-import React from "react";
 import { FlowerListNavigation } from "./FlowerListNavigation";
 import Library from "../screen/Library";
 

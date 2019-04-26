@@ -138,6 +138,10 @@ android {
 }
 
 dependencies {
+    implementation project(':react-native-kakao-logins')
+    implementation project(':react-native-image-picker')
+    implementation project(':@react-native-community_cameraroll')
+    implementation project(':rn-fetch-blob')
     implementation project(':react-native-vector-icons')
     implementation project(':react-native-gesture-handler')
     implementation fileTree(dir: "libs", include: ["*.jar"])

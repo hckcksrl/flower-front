@@ -1,9 +1,9 @@
 import React from "react";
 import NavigationHeader from "../component/NavigationHeader";
-import { StyleSheet, View } from "react-native";
+import { StyleSheet, View, Button, Alert } from "react-native";
 import { Width } from "../helper/Dimension";
 import { NavigationScreenProps } from "react-navigation";
-import FlowerContainer from "../component/Flower/FlowerContainer";
+import RNKakaoLogins from "react-native-kakao-logins";
 
 interface State {
   flowers: Array<{
@@ -23,25 +23,36 @@ class Library extends React.Component<NavigationScreenProps, State> {
       flowers: []
     };
   }
-  componentDidMount() {
-    fetch(`http://127.0.0.1:4000/file/flower/2`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json"
-      }
-    })
-      .then(response => response.json())
-      .then(json => {
-        this.setState({ flowers: json });
-      });
-  }
 
   render() {
     return (
       <View style={styles.container}>
-        {/* {this.state.flowers.map(flower => {
-          <Flower navigation={this.props.navigation} flowers={flower} />;
-        })} */}
+        <View>
+          <Button
+            onPress={() =>
+              RNKakaoLogins.login((err, result) => {
+                if (err) {
+                  console.log(err);
+                  return;
+                }
+                console.log(result);
+              })
+            }
+            title="kakaologin"
+          />
+          <Button
+            onPress={() =>
+              RNKakaoLogins.logout((err, result) => {
+                if (err) {
+                  console.log(err + err.toString());
+                  return;
+                }
+                Alert.alert("result", result);
+              })
+            }
+            title="kakaologout"
+          />
+        </View>
       </View>
     );
   }
@@ -50,7 +61,10 @@ class Library extends React.Component<NavigationScreenProps, State> {
 const styles = StyleSheet.create({
   container: {
     width: Width,
-    height: "100%"
+    height: "100%",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center"
   }
 });
 

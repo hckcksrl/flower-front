@@ -5,41 +5,30 @@ import {
   TouchableOpacity,
   ScrollView,
   StyleSheet,
-  Dimensions,
-  KeyboardAvoidingView
+  Dimensions
 } from "react-native";
 import MaterIcon from "react-native-vector-icons/MaterialCommunityIcons";
 import { Width } from "../../helper/Dimension";
-import { TextInput } from "react-native-gesture-handler";
+import Comment from "./Comment";
+import Modal from "react-native-modal";
+import InCommentForm from "./InCommentForm";
+import CommentInput from "./CommentInput";
+import { GetCommentResponse } from "../../types/types";
 
 interface Props {
-  data: {
-    GetComment: {
-      result: boolean;
-      error: string;
-      comment: {
-        id: number;
-        comment: string;
-        users: {
-          id: number;
-        };
-        incomment: {
-          id: number;
-          comment: string;
-          users: {
-            id: number;
-          };
-        }[];
-      }[];
-    };
-  };
+  data: GetCommentResponse;
   refetch: any;
+  mutationLike: any;
+  isLike: (like: any, refetch: any, id: number, argsType: string) => void;
+  flowerid: number;
 }
 
 interface State {
   show: boolean;
   height: number;
   text: string;
+  commentModal: boolean;
+  commentid: number;
 }
 
 class CommentForm extends React.Component<Props, State> {
@@ -48,15 +37,43 @@ class CommentForm extends React.Component<Props, State> {
     this.state = {
       show: false,
       height: 0,
-      text: ""
+      text: "",
+      commentModal: false,
+      commentid: 0
     };
   }
+
+  _isLike = (id, ComentRefetch) => {
+    const { refetch, mutationLike } = this.props;
+    mutationLike({
+      variables: { commentid: id }
+    })
+      .then(() => refetch())
+      .then(() => ComentRefetch());
+  };
+
+  _inCommentModal = id => {
+    this.setState({
+      commentModal: true,
+      commentid: id
+    });
+  };
+
+  _delete = () => {
+    this.setState({ commentModal: false });
+  };
+  _commentInputShow = boolean => {
+    this.setState({
+      show: boolean
+    });
+  };
 
   render() {
     const {
       data: {
         GetComment: { comment }
       },
+      mutationLike,
       refetch
     } = this.props;
     return (
@@ -71,62 +88,42 @@ class CommentForm extends React.Component<Props, State> {
             <Text style={styles.commentCount}>{comment.length}</Text>
           </View>
           <View>
-            <TouchableOpacity onPress={() => this.setState({ show: true })}>
+            <TouchableOpacity onPress={() => this._commentInputShow(true)}>
               <MaterIcon name="pencil" color={"#3b74ff"} size={24} />
             </TouchableOpacity>
           </View>
         </View>
-        <ScrollView scrollEventThrottle={16}>
+        <ScrollView scrollEventThrottle={16} style={{ marginHorizontal: 15 }}>
           {comment.map((comment, key) => {
             return (
               <View key={key}>
-                <Text>{comment.comment}</Text>
-                <Text>
-                  {comment.incomment !== null ? comment.incomment.length : null}
-                </Text>
+                <Comment
+                  comment={comment}
+                  press={true}
+                  refetch={refetch}
+                  mutationLike={mutationLike}
+                  modal={this._inCommentModal}
+                />
               </View>
             );
           })}
+          <Modal isVisible={this.state.commentModal} style={styles.bottomModal}>
+            <InCommentForm
+              refetch={refetch}
+              mutationLike={mutationLike}
+              isLike={this.props.isLike}
+              commentid={this.state.commentid}
+              delete={this._delete}
+              modal={this._inCommentModal}
+            />
+          </Modal>
         </ScrollView>
-        <KeyboardAvoidingView
-          behavior="padding"
-          style={styles.avoidingView}
-          keyboardVerticalOffset={Dimensions.get("window").height * 0.3}
-        >
-          {this.state.show ? (
-            <View style={styles.inputTextView}>
-              <View style={styles.proImage}>
-                <MaterIcon name={"face"} size={25} />
-              </View>
-              <View style={styles.textView}>
-                <TextInput
-                  style={[styles.textInput, { height: this.state.height }]}
-                  placeholder="Add a comment..."
-                  autoCorrect={false}
-                  autoFocus
-                  multiline
-                  onBlur={() => this.setState({ show: false })}
-                  keyboardAppearance={"dark"}
-                  onChangeText={text => {
-                    this.setState({ text });
-                  }}
-                  onContentSizeChange={event => {
-                    this.setState({
-                      height: event.nativeEvent.contentSize.height
-                    });
-                  }}
-                />
-              </View>
-              <View style={styles.enterIcon}>
-                <TouchableOpacity>
-                  <MaterIcon name={"send"} size={25} color="blue" />
-                </TouchableOpacity>
-              </View>
-            </View>
-          ) : (
-            <View />
-          )}
-        </KeyboardAvoidingView>
+        <CommentInput
+          commentInputShow={this._commentInputShow}
+          show={this.state.show}
+          flowerid={this.props.flowerid}
+          refetch={this.props.refetch}
+        />
       </View>
     );
   }
@@ -153,48 +150,9 @@ const styles = StyleSheet.create({
     fontSize: Width * 0.04,
     letterSpacing: 0.2
   },
-  avoidingView: {
-    position: "absolute",
-    bottom: 0,
-    left: 0,
-    right: 0
-  },
-  inputTextView: {
-    display: "flex",
-    flexDirection: "row",
-    shadowColor: "#8e8e8e",
-    shadowOpacity: 0.5,
-    shadowRadius: 2,
-    shadowOffset: { width: 0, height: -2 },
-    backgroundColor: "white"
-  },
-  proImage: {
-    paddingHorizontal: 10,
-    display: "flex",
-    justifyContent: "flex-start",
-    alignItems: "center",
-    marginVertical: 10
-  },
-  textView: {
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center"
-  },
-  textInput: {
-    justifyContent: "center",
-    fontSize: 15,
-    marginVertical: 15,
-    maxHeight: 80,
-    width: 285,
-    paddingTop: 0
-  },
-  enterIcon: {
-    display: "flex",
-    flexDirection: "column",
+  bottomModal: {
     justifyContent: "flex-end",
-    alignItems: "flex-end",
-    marginVertical: 10,
-    marginHorizontal: 10
+    margin: 0
   }
 });
 

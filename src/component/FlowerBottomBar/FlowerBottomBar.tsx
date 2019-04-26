@@ -1,5 +1,5 @@
 import React from "react";
-import { View, StyleSheet, Dimensions } from "react-native";
+import { View, StyleSheet } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import Icon from "react-native-vector-icons/FontAwesome";
 import MaterIcon from "react-native-vector-icons/MaterialCommunityIcons";
@@ -10,9 +10,9 @@ interface Props {
   navigation: NavigationScreenProp<any, any>;
   mutationLike: any;
   refetch: any;
-  complete: (like: any, refetch: any, id: number) => void;
+  isLike: (like: any, refetch: any, id: number, argsType: string) => void;
   like: boolean;
-  _visibleModal: (boolean: any) => void;
+  _visibleModal: (type: string, boolean: any) => void;
 }
 
 interface State {
@@ -46,7 +46,7 @@ class FlowerBottomBar extends React.Component<Props, State> {
         <View style={styles.tabNavi}>
           <TouchableOpacity
             onPress={() => {
-              this.props.complete(mutationLike, refetch, id);
+              this.props.isLike(mutationLike, refetch, id, "flower");
             }}
           >
             <Icon
@@ -59,7 +59,7 @@ class FlowerBottomBar extends React.Component<Props, State> {
         <View style={styles.tabNavi}>
           <TouchableOpacity
             onPress={() => {
-              _visibleModal(true);
+              _visibleModal("comment", true);
             }}
           >
             <MaterIcon
@@ -75,7 +75,11 @@ class FlowerBottomBar extends React.Component<Props, State> {
           </TouchableOpacity>
         </View>
         <View style={styles.tabNavi}>
-          <TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => {
+              _visibleModal("library", true);
+            }}
+          >
             <MaterIcon name={"plus"} size={30} color={"black"} />
           </TouchableOpacity>
         </View>

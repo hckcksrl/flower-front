@@ -2,7 +2,15 @@ import React from "react";
 import { View } from "react-native";
 import { Query, Mutation } from "react-apollo";
 import { NavigationScreenProp } from "react-navigation";
-import { GetFlower, getComment, isLike } from "./queries";
+import {
+  GetFlower,
+  getComment,
+  isLike,
+  GetLibrary,
+  CreateSaveFlower,
+  DeleteSave,
+  CreateLibrary
+} from "./queries";
 import FlowerPagePresenter from "./FlowerPagePresenter";
 
 interface Props {
@@ -27,10 +35,16 @@ class FlowerPageContainer extends React.Component<Props, State> {
     });
   }
 
-  _complete = (data, refetch, id) => {
-    data({
-      variables: { flowerid: id }
-    }).then(() => refetch());
+  _isLike = (data, refetch, id, argsType) => {
+    if (argsType === "flower") {
+      data({
+        variables: { flowerid: id }
+      }).then(() => refetch());
+    } else if (argsType === "comment") {
+      data({
+        variables: { commentid: id }
+      }).then(() => refetch());
+    }
   };
 
   render() {
@@ -47,21 +61,59 @@ class FlowerPageContainer extends React.Component<Props, State> {
                 const commentRefetch = refetch;
                 if (loading) return <View />;
                 return (
-                  <Mutation mutation={isLike}>
-                    {Like => {
+                  <Query query={GetLibrary}>
+                    {({ data, loading, refetch }) => {
+                      if (loading) return <View />;
+                      const getLibraryRefetch = refetch;
+                      const librarys = data.GetLibrary.librarys;
                       return (
-                        <FlowerPagePresenter
-                          data={flower}
-                          {...this.props}
-                          refetch={flowerRefetch}
-                          like={Like}
-                          complete={this._complete}
-                          comment={comment}
-                          commentRefetch={commentRefetch}
-                        />
+                        <Mutation mutation={CreateSaveFlower}>
+                          {CreateSaveFlower => {
+                            return (
+                              <Mutation mutation={isLike}>
+                                {Like => {
+                                  return (
+                                    <Mutation mutation={DeleteSave}>
+                                      {DeleteSave => {
+                                        return (
+                                          <Mutation mutation={CreateLibrary}>
+                                            {CreateLibrary => {
+                                              return (
+                                                <FlowerPagePresenter
+                                                  data={flower}
+                                                  {...this.props}
+                                                  refetch={flowerRefetch}
+                                                  mutationLike={Like}
+                                                  isLike={this._isLike}
+                                                  comment={comment}
+                                                  commentRefetch={
+                                                    commentRefetch
+                                                  }
+                                                  getLibraryRefetch={
+                                                    getLibraryRefetch
+                                                  }
+                                                  librarys={librarys}
+                                                  CreateSaveFlower={
+                                                    CreateSaveFlower
+                                                  }
+                                                  DeleteSave={DeleteSave}
+                                                  CreateLibrary={CreateLibrary}
+                                                />
+                                              );
+                                            }}
+                                          </Mutation>
+                                        );
+                                      }}
+                                    </Mutation>
+                                  );
+                                }}
+                              </Mutation>
+                            );
+                          }}
+                        </Mutation>
                       );
                     }}
-                  </Mutation>
+                  </Query>
                 );
               }}
             </Query>

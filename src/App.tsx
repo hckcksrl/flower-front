@@ -4,7 +4,7 @@ import { AppContainer } from "./navigation/FlowerNavigation";
 import { ApolloClient } from "apollo-client";
 import { ApolloProvider } from "react-apollo";
 import { InMemoryCache } from "apollo-cache-inmemory";
-import { HttpLink, ApolloLink, NextLink } from "apollo-boost";
+import { HttpLink } from "apollo-boost";
 import { ApolloProvider as ApolloHooksProvider } from "react-apollo-hooks";
 import { setContext } from "apollo-link-context";
 

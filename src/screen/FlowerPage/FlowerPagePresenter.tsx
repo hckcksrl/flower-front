@@ -7,61 +7,38 @@ import Modal from "react-native-modal";
 import CommentForm from "../../component/CommentForm/CommetForm";
 import FlowerBottomBar from "../../component/FlowerBottomBar/FlowerBottomBar";
 import FlowerContent from "../../component/FlowerContent/FlowerContent";
+import { ifIphoneX } from "react-native-iphone-x-helper";
+import { GetCommentResponse, GetFlowerResponse } from "src/types/types";
+import LibraryModal from "../../component/LibraryModal/LibraryModal";
 
 interface Props {
-  data: {
-    GetFlower: {
-      result: boolean;
-      error?: string;
-      flower: {
-        id: number;
-        name: string;
-        hits: number;
-        image: string;
-        content: string;
-        type: {
-          id: number;
-          name: string;
-        };
-        images: {
-          image: string;
-          content: string;
-        }[];
-      };
-      like: boolean;
-      like_count: number;
-    };
-  };
+  data: GetFlowerResponse;
   navigation: NavigationScreenProp<any, any>;
-  like: any;
+  mutationLike: any;
   refetch: any;
-  complete: (like: any, refetch: any, id: number) => void;
-  comment: {
-    GetComment: {
-      result: boolean;
-      error: string;
-      comment: Array<{
-        id: number;
-        comment: string;
-        users: {
-          id: number;
-        };
-        incomment: Array<{
-          id: number;
-          comment: string;
-          users: {
-            id: number;
-          };
-        }>;
-      }>;
-    };
-  };
+  isLike: (like: any, refetch: any, id: number, argsType: string) => void;
+  comment: GetCommentResponse;
   commentRefetch: any;
+  getLibraryRefetch: any;
+  librarys: {
+    id: number;
+    name: string;
+    saveFlower: {
+      id: number;
+      flowers: {
+        id: number;
+      };
+    }[];
+  }[];
+  CreateSaveFlower: any;
+  DeleteSave: any;
+  CreateLibrary: any;
 }
 
 interface State {
   like: boolean;
-  visibleModal: any;
+  commentModal: boolean;
+  libraryModal: boolean;
   hits: number;
 }
 
@@ -70,7 +47,8 @@ class FlowerPagePresenter extends React.Component<Props, State> {
     super(props);
     this.state = {
       like: false,
-      visibleModal: false,
+      commentModal: false,
+      libraryModal: false,
       hits: 0
     };
   }
@@ -80,7 +58,7 @@ class FlowerPagePresenter extends React.Component<Props, State> {
 
     this.setState({
       like: this.props.data.GetFlower.like,
-      hits: this.props.data.GetFlower.flower.hits
+      hits: hits
     });
   }
 
@@ -92,13 +70,18 @@ class FlowerPagePresenter extends React.Component<Props, State> {
     }
   }
 
-  _visibleModal = boolean => {
-    this.setState({ visibleModal: boolean });
+  _visibleModal = (type, boolean) => {
+    if (type === "comment") {
+      this.setState({ commentModal: boolean });
+    }
+    if (type === "library") {
+      this.setState({ libraryModal: boolean });
+    }
   };
 
   render() {
     const {
-      like,
+      mutationLike,
       refetch,
       data: {
         GetFlower: {
@@ -134,13 +117,14 @@ class FlowerPagePresenter extends React.Component<Props, State> {
               name={name}
               navigation={this.props.navigation}
               images={images}
+              like={this.props.data.GetFlower.like}
             />
           </ScrollView>
         </View>
         <View style={styles.navigator}>
           <FlowerBottomBar
-            mutationLike={like}
-            complete={this.props.complete}
+            mutationLike={mutationLike}
+            isLike={this.props.isLike}
             id={id}
             refetch={refetch}
             navigation={navigation}
@@ -149,15 +133,33 @@ class FlowerPagePresenter extends React.Component<Props, State> {
           />
         </View>
         <Modal
-          isVisible={this.state.visibleModal}
-          onBackdropPress={() => this.setState({ visibleModal: false })}
+          isVisible={this.state.commentModal}
+          onBackdropPress={() => this.setState({ commentModal: false })}
           style={styles.bottomModal}
         >
           <CommentForm
             data={this.props.comment}
             refetch={this.props.commentRefetch}
+            mutationLike={mutationLike}
+            isLike={this.props.isLike}
+            flowerid={id}
           />
         </Modal>
+        {/* <Modal
+          isVisible={this.state.libraryModal}
+          onBackdropPress={() => this.setState({ libraryModal: false })}
+          style={styles.bottomModal}
+        >
+          <LibraryModal
+            getLibraryRefetch={this.props.getLibraryRefetch}
+            librarys={this.props.librarys}
+            flowerid={id}
+            CreateSaveFlower={this.props.CreateSaveFlower}
+            DeleteSave={this.props.DeleteSave}
+            CreateLibrary={this.props.CreateLibrary}
+            modal={this._visibleModal}
+          />
+        </Modal> */}
       </View>
     );
   }
@@ -176,7 +178,15 @@ const styles = StyleSheet.create({
     flex: 0.06,
     flexDirection: "row",
     borderTopWidth: 1,
-    borderColor: "#d8d8d8"
+    borderColor: "#d8d8d8",
+    ...ifIphoneX(
+      {
+        marginBottom: 35
+      },
+      {
+        marginBottom: 0
+      }
+    )
   },
   tabNavi: {
     flex: 1,

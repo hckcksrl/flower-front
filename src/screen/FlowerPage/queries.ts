@@ -49,7 +49,56 @@ export const getComment = gql`
         incomment {
           comment
         }
+        createComment
+        likes {
+          id
+        }
       }
+    }
+  }
+`;
+export const GetLibrary = gql`
+  {
+    GetLibrary {
+      result
+      error
+      librarys {
+        id
+        name
+        saveFlower {
+          id
+          flowers {
+            id
+          }
+        }
+      }
+    }
+  }
+`;
+
+export const CreateLibrary = gql`
+  mutation CreateLibrary($name: String!) {
+    CreateLibrary(name: $name) {
+      result
+      error
+    }
+  }
+`;
+
+export const CreateSaveFlower = gql`
+  mutation CreateSaveFlower($flowerid: Int!, $libraryid: Int!) {
+    CreateSaveFlower(flowerid: $flowerid, libraryid: $libraryid) {
+      result
+      error
+    }
+  }
+`;
+
+export const DeleteSave = gql`
+  mutation DeleteSave($flowerid: Int!, $libraryid: Int!) {
+    DeleteSave(flowerid: $flowerid, libraryid: $libraryid) {
+      result
+      error
     }
   }
 `;

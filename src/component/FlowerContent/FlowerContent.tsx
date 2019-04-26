@@ -5,10 +5,15 @@ import {
   Dimensions,
   Image,
   Text,
-  TouchableOpacity
+  TouchableOpacity,
+  CameraRoll,
+  YellowBox
 } from "react-native";
 import Icon from "react-native-vector-icons/FontAwesome";
 import { NavigationScreenProp } from "react-navigation";
+YellowBox.ignoreWarnings([
+  "Module RCTImagePickerManager requires main queue setup since it overrides `init`"
+]);
 
 interface Props {
   image: string;
@@ -25,6 +30,7 @@ interface Props {
     image: string;
     content: string;
   }[];
+  like: boolean;
 }
 
 const FlowerContent: React.SFC<Props> = (props: Props) => {
@@ -36,19 +42,12 @@ const FlowerContent: React.SFC<Props> = (props: Props) => {
     content,
     hits,
     name,
-    images
+    images,
+    like
   } = props;
 
   const download = uri => {
-    Image.getSize(
-      uri,
-      (width, height) => {
-        Image.resolveAssetSource({ uri: uri, width: width, height: height });
-      },
-      () => {
-        return false;
-      }
-    );
+    CameraRoll.saveToCameraRoll(`${uri}`, "photo");
   };
   return (
     <>
@@ -70,7 +69,11 @@ const FlowerContent: React.SFC<Props> = (props: Props) => {
             <Text style={styles.typeNameFont}>{type.name}</Text>
           </TouchableOpacity>
           <View style={styles.likeHitsView}>
-            <Icon name={"heart"} size={14} color={"red"} />
+            <Icon
+              name={like ? "heart" : "heart-o"}
+              size={14}
+              color={like ? "red" : "black"}
+            />
             <Text style={styles.likeCountView}>{like_count}</Text>
             <Text>조회수 {hits}</Text>
           </View>
