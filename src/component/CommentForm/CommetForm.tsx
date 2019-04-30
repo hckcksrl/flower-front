@@ -13,59 +13,96 @@ import Comment from "./Comment";
 import Modal from "react-native-modal";
 import InCommentForm from "./InCommentForm";
 import CommentInput from "./CommentInput";
-import { GetCommentResponse } from "../../types/types";
+import { GetComResponse } from "../../types/types";
+import { NavigationScreenProp } from "react-navigation";
+import { Alerts } from "../../helper/Alert";
+import { isSignedIn } from "../../helper/Auth";
 
 interface Props {
-  data: GetCommentResponse;
-  refetch: any;
+  data: GetComResponse;
   mutationLike: any;
-  isLike: (like: any, refetch: any, id: number, argsType: string) => void;
   flowerid: number;
+  navigation: NavigationScreenProp<any, any>;
+  commentModal: (type: any, boolean: any) => void;
 }
 
 interface State {
   show: boolean;
-  height: number;
-  text: string;
   commentModal: boolean;
   commentid: number;
+  comment: any;
+  token: any;
 }
 
 class CommentForm extends React.Component<Props, State> {
+  public commentView;
   constructor(props) {
     super(props);
     this.state = {
       show: false,
-      height: 0,
-      text: "",
       commentModal: false,
-      commentid: 0
+      commentid: 0,
+      comment: null,
+      token: null
     };
+    this.commentView;
   }
 
-  _isLike = (id, ComentRefetch) => {
-    const { refetch, mutationLike } = this.props;
-    mutationLike({
-      variables: { commentid: id }
-    })
-      .then(() => refetch())
-      .then(() => ComentRefetch());
-  };
-
-  _inCommentModal = id => {
+  _inCommentModal = commentid => {
     this.setState({
       commentModal: true,
-      commentid: id
+      commentid: commentid
     });
   };
 
   _delete = () => {
     this.setState({ commentModal: false });
   };
+
   _commentInputShow = boolean => {
-    this.setState({
-      show: boolean
+    const { navigation, commentModal } = this.props;
+    const { token } = this.state;
+    if (token) {
+      this.setState({
+        show: boolean
+      });
+    } else {
+      Alerts(navigation, commentModal);
+    }
+  };
+
+  componentDidMount = () => {
+    const {
+      data: {
+        GetComment: { comment }
+      },
+      mutationLike,
+      navigation,
+      commentModal
+    } = this.props;
+    this.commentView = comment.map((comment, key) => {
+      return (
+        <View key={key}>
+          <Comment
+            commentid={comment.id}
+            press={true}
+            mutationLike={mutationLike}
+            modal={this._inCommentModal}
+            navigation={navigation}
+            commentModal={commentModal}
+            deleteModal={this._delete}
+          />
+        </View>
+      );
     });
+  };
+
+  componentWillReceiveProps(nextProps) {}
+
+  componentWillMount = () => {
+    isSignedIn()
+      .then(res => this.setState({ token: res }))
+      .catch(err => alert("An error occurred"));
   };
 
   render() {
@@ -74,7 +111,8 @@ class CommentForm extends React.Component<Props, State> {
         GetComment: { comment }
       },
       mutationLike,
-      refetch
+      navigation,
+      commentModal
     } = this.props;
     return (
       <View style={styles.scrollableModal}>
@@ -94,35 +132,38 @@ class CommentForm extends React.Component<Props, State> {
           </View>
         </View>
         <ScrollView scrollEventThrottle={16} style={{ marginHorizontal: 15 }}>
-          {comment.map((comment, key) => {
-            return (
-              <View key={key}>
-                <Comment
-                  comment={comment}
-                  press={true}
-                  refetch={refetch}
-                  mutationLike={mutationLike}
-                  modal={this._inCommentModal}
-                />
-              </View>
-            );
-          })}
-          <Modal isVisible={this.state.commentModal} style={styles.bottomModal}>
-            <InCommentForm
-              refetch={refetch}
-              mutationLike={mutationLike}
-              isLike={this.props.isLike}
-              commentid={this.state.commentid}
-              delete={this._delete}
-              modal={this._inCommentModal}
-            />
-          </Modal>
+          {comment !== null
+            ? comment.map((comment, key) => {
+                return (
+                  <View key={key}>
+                    <Comment
+                      commentid={comment.id}
+                      press={true}
+                      mutationLike={mutationLike}
+                      modal={this._inCommentModal}
+                      navigation={navigation}
+                      commentModal={commentModal}
+                      deleteModal={this._delete}
+                    />
+                  </View>
+                );
+              })
+            : null}
         </ScrollView>
+        <Modal isVisible={this.state.commentModal} style={styles.bottomModal}>
+          <InCommentForm
+            mutationLike={mutationLike}
+            deleteModal={this._delete}
+            commentid={this.state.commentid}
+            navigation={navigation}
+            commentModal={this.props.commentModal}
+          />
+        </Modal>
+
         <CommentInput
           commentInputShow={this._commentInputShow}
           show={this.state.show}
           flowerid={this.props.flowerid}
-          refetch={this.props.refetch}
         />
       </View>
     );

@@ -25,9 +25,12 @@ class FlowerPresenter extends React.Component<IProps> {
           <View>
             <TouchableOpacity
               onPress={() => {
-                mutation({ variables: { id: flowers.id } });
-                navigation.navigate("SelectFlowers", {
-                  id: flowers.id
+                mutation({ variables: { id: flowers.id } }).then(data => {
+                  if (data.data.UpHitFlower.result) {
+                    navigation.navigate("SelectFlowers", {
+                      id: flowers.id
+                    });
+                  }
                 });
               }}
             >
@@ -81,7 +84,9 @@ const styles = StyleSheet.create({
   },
   typeContainer: {
     paddingBottom: Height * 0.0231,
-    paddingTop: Height * 0.0077
+    paddingTop: Height * 0.0077,
+    display: "flex",
+    flexDirection: "row"
   }
 });
 

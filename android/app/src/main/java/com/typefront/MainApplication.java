@@ -3,6 +3,8 @@ package com.typefront;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import co.jootopia.kakao.link.RNKakaoLinkPackage;
+import com.reactnativecommunity.asyncstorage.AsyncStoragePackage;
 import com.dooboolab.kakaologins.RNKakaoLoginsPackage;
 import com.imagepicker.ImagePickerPackage;
 import com.reactnativecommunity.cameraroll.CameraRollPackage;
@@ -29,6 +31,8 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+            new RNKakaoLinkPackage(),
+            new AsyncStoragePackage(),
             new RNKakaoLoginsPackage(),
             new ImagePickerPackage(),
             new CameraRollPackage(),

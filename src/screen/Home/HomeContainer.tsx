@@ -1,22 +1,11 @@
 import React, { Component } from "react";
 import { View } from "react-native";
-import { NavigationScreenProp } from "react-navigation";
+import { NavigationScreenProp, NavigationActions } from "react-navigation";
 import { Query } from "react-apollo";
-import gql from "graphql-tag";
 import HomePresenter from "./HomePresenter";
-
-const GetType = gql`
-  {
-    GetFlowerType {
-      result
-      error
-      type {
-        id
-        name
-      }
-    }
-  }
-`;
+import { GetType } from "./queries";
+import { getToken } from "../../helper/Auth";
+import AsyncStorage from "@react-native-community/async-storage";
 
 interface Props {
   navigation: NavigationScreenProp<any, any>;

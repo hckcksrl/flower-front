@@ -2,7 +2,26 @@ import { createBottomTabNavigator } from "react-navigation";
 import NavigationHeader from "../component/NavigationHeader";
 import Height, { Width } from "../helper/Dimension";
 import { FlowerListNavigation } from "./FlowerListNavigation";
-import Library from "../screen/Library";
+import Library from "../screen/Library/Library";
+import { createSwitchNavigator } from "react-navigation";
+import Login from "../screen/Library/Login";
+import AuthLoading from "../screen/Library/AuthLoading";
+import Profile from "../screen/Library/Profile";
+
+const AuthSwitchNavigator = createSwitchNavigator({
+  Login: {
+    screen: Login
+  },
+  AuthLoading: {
+    screen: AuthLoading
+  },
+  Profile: {
+    screen: Profile
+  },
+  MyLibrary: {
+    screen: Library
+  }
+});
 
 export const TabNavigation = createBottomTabNavigator(
   {
@@ -21,7 +40,7 @@ export const TabNavigation = createBottomTabNavigator(
       }
     },
     Library: {
-      screen: Library,
+      screen: AuthSwitchNavigator,
       navigationOptions: {
         tabBarLabel: "라이브러리",
         backgroundColor: "white"
@@ -29,6 +48,7 @@ export const TabNavigation = createBottomTabNavigator(
     }
   },
   {
+    initialRouteName: "Collection",
     tabBarOptions: {
       style: {
         height: Height * 0.0695,

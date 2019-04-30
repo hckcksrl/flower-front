@@ -1,27 +1,26 @@
 import React from "react";
-import { View, Text, Dimensions, TextInput, StyleSheet } from "react-native";
+import {
+  View,
+  Text,
+  Dimensions,
+  TextInput,
+  StyleSheet,
+  Alert
+} from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { Width } from "../../helper/Dimension";
 import LibraryList from "./LibraryList";
 import Modal from "react-native-modal";
 import { ifIphoneX } from "react-native-iphone-x-helper";
+import { GetLibraryResponse } from "src/types/types";
+import { GetLibrary, CreateLibrary } from "../../screen/FlowerPage/queries";
+import { Mutation } from "react-apollo";
 
 interface Props {
-  getLibraryRefetch: any;
-  librarys: {
-    id: number;
-    name: string;
-    saveFlower: {
-      id: number;
-      flowers: {
-        id: number;
-      };
-    }[];
-  }[];
+  librarys: GetLibraryResponse[];
   flowerid: number;
   CreateSaveFlower: any;
   DeleteSave: any;
-  CreateLibrary: any;
   modal: (type: string, boolean: boolean) => void;
 }
 
@@ -66,8 +65,8 @@ class LibraryModal extends React.Component<Props, State> {
   };
 
   _submit = async () => {
-    const { check, alreadyCheck, deleteCheck, createCheck } = this.state;
-    const { getLibraryRefetch, modal } = this.props;
+    const { check, alreadyCheck } = this.state;
+    const { modal } = this.props;
     let deleteChecked = [...this.state.deleteCheck];
     let createChecked = [...this.state.createCheck];
     await alreadyCheck.map(id => {
@@ -95,21 +94,18 @@ class LibraryModal extends React.Component<Props, State> {
 
   _mutation = async () => {
     const { deleteCheck, createCheck } = this.state;
-    const {
-      CreateSaveFlower,
-      DeleteSave,
-      flowerid,
-      getLibraryRefetch
-    } = this.props;
+    const { CreateSaveFlower, DeleteSave, flowerid } = this.props;
     await deleteCheck.map(id => {
-      DeleteSave({ variables: { flowerid: flowerid, libraryid: id } }).then(
-        () => getLibraryRefetch()
-      );
+      DeleteSave({
+        variables: { flowerid: flowerid, libraryid: id },
+        refetchQueries: [{ query: GetLibrary }]
+      });
     });
     await createCheck.map(id => {
       CreateSaveFlower({
-        variables: { flowerid: flowerid, libraryid: id }
-      }).then(() => getLibraryRefetch());
+        variables: { flowerid: flowerid, libraryid: id },
+        refetchQueries: [{ query: GetLibrary }]
+      });
     });
   };
 
@@ -130,15 +126,27 @@ class LibraryModal extends React.Component<Props, State> {
     });
   }
 
-  _createLibrary = () => {
-    const { CreateLibrary, getLibraryRefetch } = this.props;
+  _createLibrary = CreateLibrary => {
     const { text } = this.state;
-    CreateLibrary({ variables: { name: text } })
-      .then(() => getLibraryRefetch())
-      .then(() => this.setState({ createModal: false }));
+    if (text !== "") {
+      CreateLibrary({
+        variables: { name: text },
+        refetchQueries: [{ query: GetLibrary }]
+      }).then(() => this.setState({ createModal: false }));
+    } else {
+      Alert.alert("저장목록 이름을 입력하세요", "", [
+        {
+          text: "확인",
+          onPress: () => {
+            return null;
+          }
+        }
+      ]);
+    }
   };
 
   render() {
+    const { librarys } = this.props;
     return (
       <View style={styles.container}>
         <View style={styles.headerView}>
@@ -154,17 +162,19 @@ class LibraryModal extends React.Component<Props, State> {
           </View>
         </View>
         <View>
-          {this.props.librarys.map(library => {
-            return (
-              <LibraryList
-                library={library}
-                key={library.id}
-                check={this.state.check}
-                stateCheck={this._onStateCheck}
-                flowerid={this.props.flowerid}
-              />
-            );
-          })}
+          {librarys !== null
+            ? librarys.map(library => {
+                return (
+                  <LibraryList
+                    library={library}
+                    key={library.id}
+                    check={this.state.check}
+                    stateCheck={this._onStateCheck}
+                    flowerid={this.props.flowerid}
+                  />
+                );
+              })
+            : null}
           <TouchableOpacity onPress={this._submit}>
             <View style={{ height: 40, justifyContent: "center" }}>
               <Text style={styles.font}>완료</Text>
@@ -202,9 +212,17 @@ class LibraryModal extends React.Component<Props, State> {
                 </TouchableOpacity>
               </View>
               <View>
-                <TouchableOpacity onPress={this._createLibrary}>
-                  <Text style={styles.headerRightFont}>생성</Text>
-                </TouchableOpacity>
+                <Mutation mutation={CreateLibrary}>
+                  {CreateLibrary => {
+                    return (
+                      <TouchableOpacity
+                        onPress={() => this._createLibrary(CreateLibrary)}
+                      >
+                        <Text style={styles.headerRightFont}>생성</Text>
+                      </TouchableOpacity>
+                    );
+                  }}
+                </Mutation>
               </View>
             </View>
           </View>

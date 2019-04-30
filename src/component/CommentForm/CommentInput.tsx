@@ -3,21 +3,19 @@ import {
   KeyboardAvoidingView,
   View,
   Dimensions,
-  StyleSheet,
-  Alert
+  StyleSheet
 } from "react-native";
 import MaterIcon from "react-native-vector-icons/MaterialCommunityIcons";
 import { TextInput, TouchableOpacity } from "react-native-gesture-handler";
-import { CreateComment } from "./queries";
+import { CreateComment, GetInComment } from "./queries";
 import { Mutation } from "react-apollo";
+import { GetCom } from "../../screen/FlowerPage/queries";
 
 interface Props {
   commentInputShow: (boolean: boolean) => void;
   show: boolean;
   flowerid?: number;
   commentid?: number;
-  refetch: any;
-  commentRefetch?: any;
 }
 interface State {
   height: number;
@@ -33,61 +31,63 @@ class CommentInput extends React.Component<Props, State> {
     };
   }
 
-  _CreateComment = CreateComment => {
-    const { refetch, commentInputShow, flowerid, commentid } = this.props;
-    if (this.state.text === "") {
-      if (commentid) {
-        CreateComment({
-          variables: { comment: this.state.text, commentid: commentid }
-        })
-          .then(() => refetch())
-          .then(() => {
-            commentInputShow(false);
-            this.setState({ text: "", height: 0 });
-          });
+  _CreateComment = async CreateComment => {
+    const { commentInputShow, flowerid, commentid } = this.props;
+    if (this.state.text !== "") {
+      if (!commentid) {
+        await CreateComment({
+          variables: { comment: this.state.text, flowerid: flowerid },
+          refetchQueries: [
+            { query: GetCom, variables: { flowersid: this.props.flowerid } }
+          ]
+        }).then(() => {
+          commentInputShow(false);
+          this.setState({ text: "", height: 0 });
+        });
         return true;
       }
-      CreateComment({
-        variables: { comment: this.state.text, flowerid: flowerid }
-      })
-        .then(() => refetch())
-        .then(() => {
-          commentInputShow(false);
-          this.setState({ text: "" });
-        });
+      await CreateComment({
+        variables: { comment: this.state.text, commentid: commentid },
+        refetchQueries: [
+          { query: GetInComment, variables: { id: this.props.commentid } }
+        ]
+      }).then(() => {
+        commentInputShow(false);
+        this.setState({ text: "", height: 0 });
+      });
       return true;
     } else {
       return false;
     }
   };
 
-  _onBlur = () => {
-    const { commentInputShow } = this.props;
-    commentInputShow(false);
-    this.setState({ height: 0 });
-    if (this.state.text !== "") {
-      Alert.alert("댓글을 삭제하시겠습니까?", "", [
-        {
-          text: "계속 작성",
-          onPress: () => {
-            commentInputShow(true);
-          }
-        },
-        {
-          text: "삭제",
-          onPress: () => {
-            commentInputShow(false);
-            this.setState({ text: "", height: 0 });
-          }
-        }
-      ]);
-    }
-  };
+  // _onBlur = () => {
+  //   const { commentInputShow } = this.props;
+  //   commentInputShow(false);
+  //   this.setState({ height: 0 });
+  //   if (this.state.text !== "") {
+  //     Alert.alert("댓글을 삭제하시겠습니까?", "", [
+  //       {
+  //         text: "계속 작성",
+  //         onPress: () => {
+  //           commentInputShow(true);
+  //         }
+  //       },
+  //       {
+  //         text: "삭제",
+  //         onPress: () => {
+  //           commentInputShow(false);
+  //           this.setState({ text: "", height: 0 });
+  //         }
+  //       }
+  //     ]);
+  //   }
+  // };
 
   componentWillReceiveProps(nextProps) {}
 
   render() {
-    const { show } = this.props;
+    const { show, commentInputShow } = this.props;
     return (
       <KeyboardAvoidingView
         behavior="padding"
@@ -107,7 +107,8 @@ class CommentInput extends React.Component<Props, State> {
                 autoFocus
                 multiline
                 onBlur={() => {
-                  this._onBlur();
+                  commentInputShow(false);
+                  this.setState({ text: "", height: 0 });
                 }}
                 keyboardAppearance={"dark"}
                 onChangeText={text => {

@@ -2,8 +2,6 @@ import React from "react";
 import { TouchableOpacity, View, Text } from "react-native";
 import MaterIcon from "react-native-vector-icons/MaterialCommunityIcons";
 import { Width } from "../../helper/Dimension";
-import { useQuery } from "react-apollo-hooks";
-import { saveFlower } from "./queries";
 
 interface Props {
   library: {
@@ -16,16 +14,7 @@ interface Props {
 }
 
 const LibraryList = (props: Props) => {
-  const { library, check, stateCheck, flowerid } = props;
-  const { data, loading } = useQuery(saveFlower, {
-    variables: { libraryid: library.id }
-  });
-
-  if (loading) return <View />;
-
-  const found = data.GetSaveFlower.saveFlower.find(save => {
-    return save.flowers.id === flowerid;
-  });
+  const { library, check, stateCheck } = props;
 
   const checked = check.indexOf(library.id);
   return (

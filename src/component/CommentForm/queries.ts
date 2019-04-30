@@ -5,6 +5,7 @@ export const GetLike = gql`
     GetLike(flowerid: $flowerid, commentid: $commentid) {
       result
       error
+      like_count
     }
   }
 `;
@@ -14,11 +15,8 @@ export const GetInComment = gql`
     GetInComment(id: $id) {
       comment {
         id
-        likes {
-          id
-        }
         users {
-          id
+          nickname
         }
         createComment
         comment
@@ -26,12 +24,9 @@ export const GetInComment = gql`
           id
           comment
           users {
-            id
+            nickname
           }
           createComment
-          likes {
-            id
-          }
         }
       }
     }

@@ -4,14 +4,14 @@ import { Query, Mutation } from "react-apollo";
 import { NavigationScreenProp } from "react-navigation";
 import {
   GetFlower,
-  getComment,
   isLike,
   GetLibrary,
   CreateSaveFlower,
   DeleteSave,
-  CreateLibrary
+  GetCom
 } from "./queries";
 import FlowerPagePresenter from "./FlowerPagePresenter";
+import { GetLike } from "../../component/CommentForm/queries";
 
 interface Props {
   navigation: NavigationScreenProp<any, any>;
@@ -29,75 +29,57 @@ class FlowerPageContainer extends React.Component<Props, State> {
     };
   }
 
-  componentWillMount() {
+  componentWillMount = async () => {
     this.setState({
       id: this.props.navigation.getParam("id", "default")
     });
-  }
-
-  _isLike = (data, refetch, id, argsType) => {
-    if (argsType === "flower") {
-      data({
-        variables: { flowerid: id }
-      }).then(() => refetch());
-    } else if (argsType === "comment") {
-      data({
-        variables: { commentid: id }
-      }).then(() => refetch());
-    }
   };
 
   render() {
     return (
       <Query query={GetFlower} variables={{ id: this.state.id }}>
-        {({ data, loading, refetch }) => {
+        {({ data, loading }) => {
           const flower = data;
-          const flowerRefetch = refetch;
           if (loading) return <View />;
           return (
-            <Query query={getComment} variables={{ flowersid: this.state.id }}>
-              {({ data, loading, refetch }) => {
-                const comment = data;
-                const commentRefetch = refetch;
+            <Query query={GetLike} variables={{ flowerid: this.state.id }}>
+              {({ data, loading }) => {
                 if (loading) return <View />;
+                const likes = data.GetLike;
                 return (
-                  <Query query={GetLibrary}>
-                    {({ data, loading, refetch }) => {
+                  <Query
+                    query={GetCom}
+                    variables={{ flowersid: this.state.id }}
+                  >
+                    {({ data, loading }) => {
+                      const comment = data;
                       if (loading) return <View />;
-                      const getLibraryRefetch = refetch;
-                      const librarys = data.GetLibrary.librarys;
                       return (
-                        <Mutation mutation={CreateSaveFlower}>
-                          {CreateSaveFlower => {
+                        <Query query={GetLibrary}>
+                          {({ data, loading }) => {
+                            if (loading) return <View />;
+                            const librarys = data.GetLibrary.librarys;
                             return (
-                              <Mutation mutation={isLike}>
-                                {Like => {
+                              <Mutation mutation={CreateSaveFlower}>
+                                {CreateSaveFlower => {
                                   return (
-                                    <Mutation mutation={DeleteSave}>
-                                      {DeleteSave => {
+                                    <Mutation mutation={isLike}>
+                                      {Like => {
                                         return (
-                                          <Mutation mutation={CreateLibrary}>
-                                            {CreateLibrary => {
+                                          <Mutation mutation={DeleteSave}>
+                                            {DeleteSave => {
                                               return (
                                                 <FlowerPagePresenter
                                                   data={flower}
                                                   {...this.props}
-                                                  refetch={flowerRefetch}
                                                   mutationLike={Like}
-                                                  isLike={this._isLike}
                                                   comment={comment}
-                                                  commentRefetch={
-                                                    commentRefetch
-                                                  }
-                                                  getLibraryRefetch={
-                                                    getLibraryRefetch
-                                                  }
                                                   librarys={librarys}
                                                   CreateSaveFlower={
                                                     CreateSaveFlower
                                                   }
                                                   DeleteSave={DeleteSave}
-                                                  CreateLibrary={CreateLibrary}
+                                                  likes={likes}
                                                 />
                                               );
                                             }}
@@ -110,7 +92,7 @@ class FlowerPageContainer extends React.Component<Props, State> {
                               </Mutation>
                             );
                           }}
-                        </Mutation>
+                        </Query>
                       );
                     }}
                   </Query>

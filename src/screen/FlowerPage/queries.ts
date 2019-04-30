@@ -20,8 +20,6 @@ export const GetFlower = gql`
           content
         }
       }
-      like
-      like_count
     }
   }
 `;
@@ -35,6 +33,18 @@ export const isLike = gql`
   }
 `;
 
+export const GetCom = gql`
+  query GetComment($flowersid: Int!) {
+    GetComment(flowersid: $flowersid) {
+      result
+      error
+      comment {
+        id
+      }
+    }
+  }
+`;
+
 export const getComment = gql`
   query GetComment($flowersid: Int!) {
     GetComment(flowersid: $flowersid) {
@@ -44,10 +54,18 @@ export const getComment = gql`
         id
         comment
         users {
-          id
+          nickname
         }
         incomment {
+          id
           comment
+          users {
+            nickname
+          }
+          createComment
+          likes {
+            id
+          }
         }
         createComment
         likes {

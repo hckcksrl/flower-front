@@ -2,26 +2,8 @@ import React from "react";
 import { View } from "react-native";
 import { NavigationScreenProp } from "react-navigation";
 import { Query } from "react-apollo";
-import gql from "graphql-tag";
 import CollectionPresenter from "./CollectionFlowersPresenter";
-
-const GetFlowers = gql`
-  query GetFlowers($typeid: Int!) {
-    GetFlowers(typeid: $typeid) {
-      result
-      error
-      flowers {
-        id
-        name
-        image
-        type {
-          id
-          name
-        }
-      }
-    }
-  }
-`;
+import { GetFlowers } from "./queries";
 
 interface Props {
   navigation: NavigationScreenProp<any, any>;

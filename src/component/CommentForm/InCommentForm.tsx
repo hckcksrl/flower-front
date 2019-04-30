@@ -9,26 +9,25 @@ import {
 } from "react-native";
 import MaterIcon from "react-native-vector-icons/MaterialCommunityIcons";
 import { Width } from "../../helper/Dimension";
-import { Query } from "react-apollo";
 import Comment from "./Comment";
-import { GetInComment } from "./queries";
 import CommentInput from "./CommentInput";
-import InComment from "./InComment";
+import { Query } from "react-apollo";
+import { GetInComment } from "./queries";
+import { NavigationScreenProp } from "react-navigation";
+import { Alerts } from "../../helper/Alert";
+import { isSignedIn } from "../../helper/Auth";
 
 interface Props {
-  commentid: number;
-  refetch: any;
   mutationLike: any;
-  isLike: (like: any, refetch: any, id: number, argsType: string) => void;
-  delete: () => void;
-  modal: (id: any) => void;
+  deleteModal: () => void;
+  commentid: number;
+  navigation: NavigationScreenProp<any, any>;
+  commentModal: (type: any, boolean: any) => void;
 }
 
 interface State {
   show: boolean;
-  height: number;
-  text: string;
-  commentModal: boolean;
+  token: any;
 }
 
 class InCommentForm extends React.Component<Props, State> {
@@ -36,23 +35,30 @@ class InCommentForm extends React.Component<Props, State> {
     super(props);
     this.state = {
       show: false,
-      height: 0,
-      text: "",
-      commentModal: false
+      token: null
     };
   }
 
+  componentWillMount() {
+    isSignedIn()
+      .then(res => this.setState({ token: res }))
+      .catch(err => alert("An error occurred"));
+  }
+
   _commentInputShow = boolean => {
-    this.setState({
-      show: boolean
-    });
+    const { navigation, commentModal, deleteModal } = this.props;
+    const { token } = this.state;
+    if (token) {
+      this.setState({
+        show: boolean
+      });
+    } else {
+      Alerts(navigation, commentModal, deleteModal);
+    }
   };
 
-  componentWillReceiveProps(nextProps) {}
-
   render() {
-    const { commentid, refetch, mutationLike } = this.props;
-    const commentRefetch = refetch;
+    const { mutationLike } = this.props;
     return (
       <View style={styles.scrollableModal}>
         <View style={styles.commentHeader}>
@@ -62,25 +68,24 @@ class InCommentForm extends React.Component<Props, State> {
             <Text style={styles.headerText}>답글</Text>
           </View>
           <View style={{ marginLeft: 292 }}>
-            <TouchableOpacity onPress={() => this.props.delete()}>
+            <TouchableOpacity onPress={() => this.props.deleteModal()}>
               <MaterIcon name="close" color={"#3b74ff"} size={24} />
             </TouchableOpacity>
           </View>
         </View>
-        <Query query={GetInComment} variables={{ id: commentid }}>
-          {({ data, loading, refetch }) => {
+        <Query query={GetInComment} variables={{ id: this.props.commentid }}>
+          {({ data, loading }) => {
             if (loading) return null;
-            const GetInCommentRefetch = refetch;
-            console.log(data.GetInComment.comment.incomment);
+            const comment = data.GetInComment.comment;
             return (
               <>
                 <Comment
-                  comment={data.GetInComment.comment}
+                  commentid={comment.id}
                   press={false}
-                  refetch={refetch}
                   mutationLike={mutationLike}
-                  modal={this.props.modal}
-                  GetInCommentRefetch={GetInCommentRefetch}
+                  navigation={this.props.navigation}
+                  commentModal={this.props.commentModal}
+                  deleteModal={this.props.deleteModal}
                 />
                 <TouchableOpacity
                   onPress={() => {
@@ -93,27 +98,28 @@ class InCommentForm extends React.Component<Props, State> {
                     </View>
                   </View>
                 </TouchableOpacity>
-                <ScrollView
-                  scrollEventThrottle={16}
-                  style={{ marginHorizontal: 15 }}
-                >
-                  {data.GetInComment.comment.incomment.map((incomment, key) => {
-                    return (
-                      <InComment
-                        comment={incomment}
-                        refetch={refetch}
-                        mutationLike={mutationLike}
-                        GetInCommentRefetch={GetInCommentRefetch}
-                        key={key}
-                      />
-                    );
-                  })}
+                <ScrollView scrollEventThrottle={16}>
+                  {comment.incomment !== null
+                    ? comment.incomment.map((comment, key) => {
+                        return (
+                          <Comment
+                            commentid={comment.id}
+                            press={false}
+                            incomment={true}
+                            mutationLike={mutationLike}
+                            navigation={this.props.navigation}
+                            commentModal={this.props.commentModal}
+                            key={key}
+                            deleteModal={this.props.deleteModal}
+                          />
+                        );
+                      })
+                    : null}
                 </ScrollView>
                 <CommentInput
                   show={this.state.show}
                   commentInputShow={this._commentInputShow}
-                  commentid={commentid}
-                  refetch={refetch}
+                  commentid={comment.id}
                 />
               </>
             );

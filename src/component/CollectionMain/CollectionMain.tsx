@@ -47,7 +47,6 @@ const CollectionMain: React.SFC<IProps> = (props: IProps) => {
   const _renderItem = ({ item, index }) => {
     return <FlowerContainer flowers={item} navigation={props.navigation} />;
   };
-
   return (
     <View style={styles.container}>
       <View style={styles.header}>
@@ -67,16 +66,17 @@ const CollectionMain: React.SFC<IProps> = (props: IProps) => {
           </TouchableOpacity>
         </View>
       </View>
-      <Carousel
-        data={flowers}
-        sliderWidth={Width}
-        itemWidth={Width * 0.92}
-        renderItem={_renderItem}
-        style={styles.mainScroll}
-        layout={"default"}
-        useScrollView={true}
-        inactiveSlideScale={1}
-      />
+      <View>
+        <Carousel
+          data={flowers}
+          sliderWidth={Width}
+          itemWidth={Width * 0.92}
+          renderItem={_renderItem}
+          style={styles.mainScroll}
+          useScrollView={true}
+          inactiveSlideScale={1}
+        />
+      </View>
     </View>
   );
 };

@@ -7,10 +7,14 @@ import {
   Text,
   TouchableOpacity,
   CameraRoll,
-  YellowBox
+  YellowBox,
+  Platform,
+  PermissionsAndroid,
+  Alert
 } from "react-native";
 import Icon from "react-native-vector-icons/FontAwesome";
 import { NavigationScreenProp } from "react-navigation";
+import { GetLikeResponse } from "../../types/types";
 YellowBox.ignoreWarnings([
   "Module RCTImagePickerManager requires main queue setup since it overrides `init`"
 ]);
@@ -22,7 +26,6 @@ interface Props {
     id: number;
     name: string;
   };
-  like_count: number;
   content: string;
   hits: number;
   name: string;
@@ -30,24 +33,32 @@ interface Props {
     image: string;
     content: string;
   }[];
-  like: boolean;
+  likes: GetLikeResponse;
 }
 
 const FlowerContent: React.SFC<Props> = (props: Props) => {
-  const {
-    image,
-    navigation,
-    type,
-    like_count,
-    content,
-    hits,
-    name,
-    images,
-    like
-  } = props;
+  const { image, navigation, type, content, hits, name, images, likes } = props;
 
-  const download = uri => {
-    CameraRoll.saveToCameraRoll(`${uri}`, "photo");
+  const download = async uri => {
+    if (Platform.OS === "ios") {
+      CameraRoll.saveToCameraRoll(`${uri}`, "photo");
+    } else {
+      try {
+        const granted = await PermissionsAndroid.request(
+          PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE
+        );
+        if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+          CameraRoll.saveToCameraRoll(``, "photo");
+        } else {
+          Alert.alert(
+            "Permission Denied!",
+            "You need to give storage permission to download the file"
+          );
+        }
+      } catch (err) {
+        console.warn(err);
+      }
+    }
   };
   return (
     <>
@@ -70,11 +81,11 @@ const FlowerContent: React.SFC<Props> = (props: Props) => {
           </TouchableOpacity>
           <View style={styles.likeHitsView}>
             <Icon
-              name={like ? "heart" : "heart-o"}
+              name={likes.result ? "heart" : "heart-o"}
               size={14}
-              color={like ? "red" : "black"}
+              color={likes.result ? "red" : "black"}
             />
-            <Text style={styles.likeCountView}>{like_count}</Text>
+            <Text style={styles.likeCountView}>{likes.like_count}</Text>
             <Text>조회수 {hits}</Text>
           </View>
         </View>

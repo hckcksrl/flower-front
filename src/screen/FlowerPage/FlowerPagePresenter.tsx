@@ -8,37 +8,31 @@ import CommentForm from "../../component/CommentForm/CommetForm";
 import FlowerBottomBar from "../../component/FlowerBottomBar/FlowerBottomBar";
 import FlowerContent from "../../component/FlowerContent/FlowerContent";
 import { ifIphoneX } from "react-native-iphone-x-helper";
-import { GetCommentResponse, GetFlowerResponse } from "src/types/types";
+import {
+  GetFlowerResponse,
+  GetComResponse,
+  GetLibraryResponse,
+  GetLikeResponse
+} from "src/types/types";
 import LibraryModal from "../../component/LibraryModal/LibraryModal";
+import LinkModal from "../../component/LinkModal/LinkModal";
 
 interface Props {
   data: GetFlowerResponse;
   navigation: NavigationScreenProp<any, any>;
   mutationLike: any;
-  refetch: any;
-  isLike: (like: any, refetch: any, id: number, argsType: string) => void;
-  comment: GetCommentResponse;
-  commentRefetch: any;
-  getLibraryRefetch: any;
-  librarys: {
-    id: number;
-    name: string;
-    saveFlower: {
-      id: number;
-      flowers: {
-        id: number;
-      };
-    }[];
-  }[];
+  comment: GetComResponse;
+  librarys: GetLibraryResponse[];
   CreateSaveFlower: any;
   DeleteSave: any;
-  CreateLibrary: any;
+  likes: GetLikeResponse;
 }
 
 interface State {
   like: boolean;
   commentModal: boolean;
   libraryModal: boolean;
+  linkModal: boolean;
   hits: number;
 }
 
@@ -49,23 +43,24 @@ class FlowerPagePresenter extends React.Component<Props, State> {
       like: false,
       commentModal: false,
       libraryModal: false,
+      linkModal: false,
       hits: 0
     };
   }
 
-  componentWillMount() {
+  componentWillMount = () => {
     const hits = this.props.data.GetFlower.flower.hits;
 
     this.setState({
-      like: this.props.data.GetFlower.like,
+      like: this.props.likes.result,
       hits: hits
     });
-  }
+  };
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.data) {
       this.setState({
-        like: this.props.data.GetFlower.like
+        like: this.props.likes.result
       });
     }
   }
@@ -77,25 +72,27 @@ class FlowerPagePresenter extends React.Component<Props, State> {
     if (type === "library") {
       this.setState({ libraryModal: boolean });
     }
+    if (type === "link") {
+      this.setState({ linkModal: boolean });
+    }
   };
 
   render() {
     const {
       mutationLike,
-      refetch,
       data: {
         GetFlower: {
-          flower: { id, name, hits, type, content, image, images },
-          like_count
+          flower: { id, name, hits, type, content, image, images }
         }
       },
+      // likes,
       navigation
     } = this.props;
     return (
       <View style={styles.container}>
         <StatusBar hidden={true} />
         <View style={{ position: "absolute", left: 30, top: 30, zIndex: 2 }}>
-          <TouchableOpacity onPress={() => this.props.navigation.goBack(null)}>
+          <TouchableOpacity onPress={() => this.props.navigation.goBack()}>
             <Icon
               name={
                 // "arrow-left"
@@ -113,22 +110,19 @@ class FlowerPagePresenter extends React.Component<Props, State> {
               type={type}
               content={content}
               hits={hits}
-              like_count={like_count}
               name={name}
               navigation={this.props.navigation}
               images={images}
-              like={this.props.data.GetFlower.like}
+              likes={this.props.likes}
             />
           </ScrollView>
         </View>
         <View style={styles.navigator}>
           <FlowerBottomBar
             mutationLike={mutationLike}
-            isLike={this.props.isLike}
             id={id}
-            refetch={refetch}
             navigation={navigation}
-            like={this.props.data.GetFlower.like}
+            likes={this.props.likes}
             _visibleModal={this._visibleModal}
           />
         </View>
@@ -139,27 +133,32 @@ class FlowerPagePresenter extends React.Component<Props, State> {
         >
           <CommentForm
             data={this.props.comment}
-            refetch={this.props.commentRefetch}
             mutationLike={mutationLike}
-            isLike={this.props.isLike}
             flowerid={id}
+            navigation={navigation}
+            commentModal={this._visibleModal}
           />
         </Modal>
-        {/* <Modal
+        <Modal
           isVisible={this.state.libraryModal}
           onBackdropPress={() => this.setState({ libraryModal: false })}
           style={styles.bottomModal}
         >
           <LibraryModal
-            getLibraryRefetch={this.props.getLibraryRefetch}
             librarys={this.props.librarys}
             flowerid={id}
             CreateSaveFlower={this.props.CreateSaveFlower}
             DeleteSave={this.props.DeleteSave}
-            CreateLibrary={this.props.CreateLibrary}
             modal={this._visibleModal}
           />
-        </Modal> */}
+        </Modal>
+        <Modal
+          isVisible={this.state.linkModal}
+          onBackdropPress={() => this.setState({ linkModal: false })}
+          style={styles.bottomModal}
+        >
+          <LinkModal flower={this.props.data.GetFlower.flower} />
+        </Modal>
       </View>
     );
   }

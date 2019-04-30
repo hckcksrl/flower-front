@@ -27,13 +27,13 @@ class HomePresenter extends Component<Props, State> {
     };
   }
 
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.flowers) {
-      this.setState({
-        fetch: true
-      });
-    }
-  }
+  // componentWillReceiveProps(nextProps) {
+  //   if (nextProps.flowers) {
+  //     this.setState({
+  //       fetch: true
+  //     });
+  //   }
+  // }
 
   render() {
     const { refetch, refresh, navigation, type, loading } = this.props;

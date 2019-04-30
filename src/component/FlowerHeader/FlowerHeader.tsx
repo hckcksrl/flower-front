@@ -1,7 +1,6 @@
 import React from "react";
 import { StyleSheet, View, Text } from "react-native";
 import Height, { Width } from "../../helper/Dimension";
-import { NavigationScreenProp } from "react-navigation";
 
 interface IProps {
   header: string;
@@ -30,6 +29,7 @@ const styles = StyleSheet.create({
     paddingTop: Height * 0.0471,
     borderBottomWidth: 1,
     borderColor: "#d8d8d8"
+    // marginBottom: Height * 0.0471
   },
   header: {
     fontSize: Width * 0.08,
