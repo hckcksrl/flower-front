@@ -88,15 +88,13 @@ class CollectionContainer extends React.Component<Props, State> {
         notifyOnNetworkStatusChange={true}
         onCompleted={this._complete}
       >
-        {({ data, loading, refetch }) => {
+        {({ data, loading }) => {
           if (loading) return <View />;
           return (
             <CollectionPresenter
-              refresh={this._refresh}
               flowers={this.state.flowers}
               loading={this.state.loading}
               header={this.state.header}
-              refetch={refetch}
               {...this.props}
             />
           );

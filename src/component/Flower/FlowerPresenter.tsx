@@ -2,6 +2,8 @@ import React from "react";
 import { View, Image, TouchableOpacity, Text, StyleSheet } from "react-native";
 import Height, { Width } from "../../helper/Dimension";
 import { NavigationScreenProp } from "react-navigation";
+import { isSignedIn } from "../../helper/Auth";
+import { GetRecent } from "../../screen/Library/queries";
 
 interface IProps {
   flowers: {
@@ -15,10 +17,29 @@ interface IProps {
   };
   navigation: NavigationScreenProp<any, any>;
   mutation: any;
+  CreateRecent: any;
 }
-class FlowerPresenter extends React.Component<IProps> {
+
+interface State {
+  isLogined: boolean;
+}
+
+class FlowerPresenter extends React.Component<IProps, State> {
+  constructor(props) {
+    super(props);
+    this.state = {
+      isLogined: false
+    };
+  }
+
+  componentWillMount() {
+    isSignedIn()
+      .then(res => this.setState({ isLogined: true }))
+      .catch(err => alert("An error occurred"));
+  }
+
   render() {
-    const { flowers, navigation, mutation } = this.props;
+    const { flowers, navigation, mutation, CreateRecent } = this.props;
     return (
       <View style={styles.main}>
         <View>
@@ -27,6 +48,12 @@ class FlowerPresenter extends React.Component<IProps> {
               onPress={() => {
                 mutation({ variables: { id: flowers.id } }).then(data => {
                   if (data.data.UpHitFlower.result) {
+                    if (this.state.isLogined) {
+                      CreateRecent({
+                        variables: { id: flowers.id },
+                        refetchQueries: [{ query: GetRecent }]
+                      });
+                    }
                     navigation.navigate("SelectFlowers", {
                       id: flowers.id
                     });
@@ -72,7 +99,8 @@ const styles = StyleSheet.create({
   image: {
     width: Width * 0.893,
     height: Height * 0.618,
-    borderRadius: 10
+    borderRadius: 10,
+    backgroundColor: "#f2f2f2"
   },
   nameContainer: {
     paddingTop: 0.012 * Height

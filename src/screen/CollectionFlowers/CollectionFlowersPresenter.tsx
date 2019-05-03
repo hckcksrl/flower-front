@@ -1,11 +1,5 @@
 import React from "react";
-import {
-  View,
-  StyleSheet,
-  ScrollView,
-  RefreshControl,
-  ActivityIndicator
-} from "react-native";
+import { View, StyleSheet, ActivityIndicator } from "react-native";
 import NavigationHeader from "../../component/NavigationHeader";
 import Height, { Width } from "../../helper/Dimension";
 import { getStatusBarHeight } from "react-native-status-bar-height";
@@ -14,7 +8,6 @@ import FlowerHeader from "../../component/FlowerHeader";
 import FlowerContainer from "../../component/Flower/FlowerContainer";
 
 interface Props {
-  refresh: (refetch: any) => void;
   flowers: Array<{
     name: string;
     image: string;
@@ -26,7 +19,6 @@ interface Props {
   loading: boolean;
   navigation: NavigationScreenProp<any, any>;
   header: string;
-  refetch: any;
 }
 
 interface State {
@@ -116,14 +108,7 @@ class CollectionPresenter extends React.Component<Props, State> {
   };
 
   render() {
-    const {
-      refresh,
-      flowers,
-      loading,
-      navigation,
-      header,
-      refetch
-    } = this.props;
+    const { navigation } = this.props;
     return (
       <View style={{ flex: 1, paddingTop: getStatusBarHeight() }}>
         <View style={styles.container}>

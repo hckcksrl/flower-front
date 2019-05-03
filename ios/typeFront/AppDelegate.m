@@ -11,8 +11,14 @@
 #import <React/RCTBundleURLProvider.h>
 #import <React/RCTRootView.h>
 #import <KakaoOpenSDK/KakaoOpenSDK.h>
+#import <React/RCTLinkingManager.h>
+#import "RNSplashScreen.h"  // here
+
+
 
 @implementation AppDelegate
+
+
 
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url
   sourceApplication:(NSString *)sourceApplication
@@ -24,13 +30,21 @@
   return false;
 }
 
+- (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url {
+  NSLog(@"url recieved: %@", url);
+  return YES;
+}
+
+
+
+
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url
             options:(NSDictionary<NSString *,id> *)options {
   if ([KOSession isKakaoAccountLoginCallback:url]) {
     return [KOSession handleOpenURL:url];
   }
   
-  return false;
+  return [RCTLinkingManager application:application openURL:url options:options];
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application
@@ -53,6 +67,9 @@
   rootViewController.view = rootView;
   self.window.rootViewController = rootViewController;
   [self.window makeKeyAndVisible];
+  
+  [RNSplashScreen show];  // here
+  
   return YES;
 }
 

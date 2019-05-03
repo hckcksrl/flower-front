@@ -1,6 +1,11 @@
 import React, { Component } from "react";
-import { View, StyleSheet, ScrollView, RefreshControl } from "react-native";
-import { NavigationScreenProp } from "react-navigation";
+import {
+  View,
+  StyleSheet,
+  RefreshControl,
+  ActivityIndicator
+} from "react-native";
+import { NavigationScreenProp, FlatList, ScrollView } from "react-navigation";
 import NavigationHeader from "../../component/NavigationHeader";
 import CollectionHeader from "../../component/CollectionHeader/CollectionHeader";
 import { Width } from "../../helper/Dimension";
@@ -15,28 +20,44 @@ interface Props {
   refresh: (refetch: any) => void;
   refetch: any;
   loading: boolean;
+  title: string;
 }
 interface State {
   fetch: boolean;
 }
 class HomePresenter extends Component<Props, State> {
+  public scrollview;
   constructor(props: Props) {
     super(props);
     this.state = {
-      fetch: false
+      fetch: true
     };
   }
+  componentDidMount() {
+    this.setState({
+      fetch: false
+    });
+  }
 
-  // componentWillReceiveProps(nextProps) {
-  //   if (nextProps.flowers) {
-  //     this.setState({
-  //       fetch: true
-  //     });
-  //   }
-  // }
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.flowers) {
+      this.setState({
+        fetch: true
+      });
+    }
+  }
+
+  _renderRow = ({ item }) => {
+    const { navigation } = this.props;
+    return <CollectionMain navigation={navigation} typeid={item.id} />;
+  };
 
   render() {
-    const { refetch, refresh, navigation, type, loading } = this.props;
+    const { refetch, refresh, navigation, type, loading, title } = this.props;
+    const { fetch } = this.state;
+    if (fetch) {
+      return <ActivityIndicator size="large" />;
+    }
     return (
       <View style={{ flex: 1, paddingTop: getStatusBarHeight() }}>
         <View style={styles.container}>
@@ -52,13 +73,11 @@ class HomePresenter extends Component<Props, State> {
             }
           >
             <CollectionHeader />
-            {type.map((type, key) => (
-              <CollectionMain
-                navigation={navigation}
-                typeid={type.id}
-                key={key}
-              />
-            ))}
+            <FlatList
+              data={type}
+              renderItem={this._renderRow}
+              keyExtractor={(item, index) => index.toString()}
+            />
           </ScrollView>
         </View>
       </View>

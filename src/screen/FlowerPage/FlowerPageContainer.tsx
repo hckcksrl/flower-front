@@ -36,21 +36,19 @@ class FlowerPageContainer extends React.Component<Props, State> {
   };
 
   render() {
+    const id = parseInt(this.props.navigation.getParam("id", "default"));
     return (
-      <Query query={GetFlower} variables={{ id: this.state.id }}>
+      <Query query={GetFlower} variables={{ id: id }}>
         {({ data, loading }) => {
           const flower = data;
           if (loading) return <View />;
           return (
-            <Query query={GetLike} variables={{ flowerid: this.state.id }}>
+            <Query query={GetLike} variables={{ flowerid: id }}>
               {({ data, loading }) => {
                 if (loading) return <View />;
                 const likes = data.GetLike;
                 return (
-                  <Query
-                    query={GetCom}
-                    variables={{ flowersid: this.state.id }}
-                  >
+                  <Query query={GetCom} variables={{ flowersid: id }}>
                     {({ data, loading }) => {
                       const comment = data;
                       if (loading) return <View />;

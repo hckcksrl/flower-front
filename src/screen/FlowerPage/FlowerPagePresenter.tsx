@@ -1,6 +1,9 @@
 import React from "react";
-import { View, StyleSheet, StatusBar } from "react-native";
-import { ScrollView, TouchableOpacity } from "react-native-gesture-handler";
+import { View, StyleSheet, StatusBar, ScrollView } from "react-native";
+import {
+  TouchableOpacity,
+  TouchableNativeFeedback
+} from "react-native-gesture-handler";
 import Icon from "react-native-vector-icons/FontAwesome";
 import { NavigationScreenProp } from "react-navigation";
 import Modal from "react-native-modal";
@@ -85,22 +88,14 @@ class FlowerPagePresenter extends React.Component<Props, State> {
           flower: { id, name, hits, type, content, image, images }
         }
       },
-      // likes,
       navigation
     } = this.props;
     return (
       <View style={styles.container}>
         <StatusBar hidden={true} />
-        <View style={{ position: "absolute", left: 30, top: 30, zIndex: 2 }}>
+        <View style={{ position: "absolute", left: 30, top: 30, zIndex: 3 }}>
           <TouchableOpacity onPress={() => this.props.navigation.goBack()}>
-            <Icon
-              name={
-                // "arrow-left"
-                "times-circle"
-              }
-              size={24}
-              color={"black"}
-            />
+            <Icon name={"times-circle"} size={24} color={"black"} />
           </TouchableOpacity>
         </View>
         <View style={styles.scrollContainer}>
@@ -157,7 +152,10 @@ class FlowerPagePresenter extends React.Component<Props, State> {
           onBackdropPress={() => this.setState({ linkModal: false })}
           style={styles.bottomModal}
         >
-          <LinkModal flower={this.props.data.GetFlower.flower} />
+          <LinkModal
+            flower={this.props.data.GetFlower.flower}
+            modal={this._visibleModal}
+          />
         </Modal>
       </View>
     );

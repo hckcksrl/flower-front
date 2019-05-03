@@ -849,6 +849,16 @@
     xcode "^2.0.0"
     xmldoc "^0.4.0"
 
+"@react-native-community/slider@^1.1.0":
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/@react-native-community/slider/-/slider-1.1.0.tgz#98e4fbc5e40304be1d02216aea4fded4349301d8"
+  integrity sha512-73kn+OaPJ4e5gvxlG97GLSmCzUq/twQHfvqA+/6OjKfScOtPCs4em8e4V0mn2hSje/PNLtSqnjzNUNviB4f0+w==
+
+"@react-native-community/viewpager@^1.1.6":
+  version "1.1.6"
+  resolved "https://registry.yarnpkg.com/@react-native-community/viewpager/-/viewpager-1.1.6.tgz#267da51adbdebfb709e2e22f5e06399f49e6b1ae"
+  integrity sha512-WnlLGNdzkL0GQQ1WK0++giXOgQcEU6Dx+WEj7uYmqLNCsIc1Jhvm1ChTEKOs5N7Otz+VgoPBOvQyEuAUKooSOg==
+
 "@react-navigation/core@~3.2.1":
   version "3.2.1"
   resolved "https://registry.yarnpkg.com/@react-navigation/core/-/core-3.2.1.tgz#fd05c1cc405576c84aec57b6a15a09f649e79e0d"
@@ -5499,6 +5509,11 @@ react-native-read-more-text@^1.1.0:
   resolved "https://registry.yarnpkg.com/react-native-read-more-text/-/react-native-read-more-text-1.1.0.tgz#d6f02a5caff8c91297957be66ecb42287c084e96"
   integrity sha512-xmaytGMZyZPnJZQ8z0Tkbx6ff1XNznIRmbsfhaTczEbxkZonIIcPt9RmCMgyoSxOrXAsINsKNNbUt1OopNb92Q==
 
+react-native-responsive-screen@^1.2.2:
+  version "1.2.2"
+  resolved "https://registry.yarnpkg.com/react-native-responsive-screen/-/react-native-responsive-screen-1.2.2.tgz#59d82146b61c62510032fb795652335433f05f93"
+  integrity sha512-0UDQIBD+bW7+3NNt+ukSleUkKxbRiNupmzLQjdjyRoAjqxidN8+1gs0mHXfmhowcg2b875zTYrtQUG3022yHKw==
+
 react-native-safe-area-view@^0.13.0:
   version "0.13.1"
   resolved "https://registry.yarnpkg.com/react-native-safe-area-view/-/react-native-safe-area-view-0.13.1.tgz#834bbb6d22f76a7ff07de56725ee5667ba1386b0"
@@ -5518,6 +5533,11 @@ react-native-snap-carousel@^3.7.5:
   dependencies:
     prop-types "^15.6.1"
     react-addons-shallow-compare "15.6.2"
+
+react-native-splash-screen@^3.2.0:
+  version "3.2.0"
+  resolved "https://registry.yarnpkg.com/react-native-splash-screen/-/react-native-splash-screen-3.2.0.tgz#d47ec8557b1ba988ee3ea98d01463081b60fff45"
+  integrity sha512-Ls9qiNZzW/OLFoI25wfjjAcrf2DZ975hn2vr6U9gyuxi2nooVbzQeFoQS5vQcbCt9QX5NY8ASEEAtlLdIa6KVg==
 
 react-native-status-bar-height@^2.2.0, react-native-status-bar-height@^2.3.1:
   version "2.3.1"

@@ -119,7 +119,7 @@ const FlowerContent: React.SFC<Props> = (props: Props) => {
                     }}
                     style={{ marginTop: 3 }}
                   >
-                    <Text style={{ color: "blue" }}>사진 저장</Text>
+                    <Text style={{ color: "blue" }}>기기에 사진 저장하기</Text>
                   </TouchableOpacity>
                 </View>
                 <View style={{ marginTop: 8, marginHorizontal: 15 }}>

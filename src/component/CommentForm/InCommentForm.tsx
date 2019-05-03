@@ -5,7 +5,9 @@ import {
   TouchableOpacity,
   ScrollView,
   StyleSheet,
-  Dimensions
+  Dimensions,
+  ActivityIndicator,
+  FlatList
 } from "react-native";
 import MaterIcon from "react-native-vector-icons/MaterialCommunityIcons";
 import { Width } from "../../helper/Dimension";
@@ -16,6 +18,7 @@ import { GetInComment } from "./queries";
 import { NavigationScreenProp } from "react-navigation";
 import { Alerts } from "../../helper/Alert";
 import { isSignedIn } from "../../helper/Auth";
+import EditCommentInput from "./EditCommentInput";
 
 interface Props {
   mutationLike: any;
@@ -23,11 +26,16 @@ interface Props {
   commentid: number;
   navigation: NavigationScreenProp<any, any>;
   commentModal: (type: any, boolean: any) => void;
+  flowerid?: number;
 }
 
 interface State {
   show: boolean;
   token: any;
+  loading: boolean;
+  editText: string;
+  editCommentid: number;
+  editShow: boolean;
 }
 
 class InCommentForm extends React.Component<Props, State> {
@@ -35,15 +43,39 @@ class InCommentForm extends React.Component<Props, State> {
     super(props);
     this.state = {
       show: false,
-      token: null
+      token: null,
+      loading: true,
+      editText: "",
+      editCommentid: 0,
+      editShow: false
     };
   }
+
+  _EditInput = (text, id, show) => {
+    this.setState({
+      editText: text,
+      editCommentid: id,
+      editShow: show
+    });
+  };
+
+  _EditInputShow = boolean => {
+    this.setState({
+      editShow: boolean
+    });
+  };
 
   componentWillMount() {
     isSignedIn()
       .then(res => this.setState({ token: res }))
       .catch(err => alert("An error occurred"));
   }
+
+  componentDidMount = () => {
+    setTimeout(() => {
+      this.setState({ loading: false });
+    }, 500);
+  };
 
   _commentInputShow = boolean => {
     const { navigation, commentModal, deleteModal } = this.props;
@@ -55,6 +87,23 @@ class InCommentForm extends React.Component<Props, State> {
     } else {
       Alerts(navigation, commentModal, deleteModal);
     }
+  };
+
+  _renderRow = ({ item }) => {
+    const { mutationLike, navigation, commentModal } = this.props;
+    return (
+      <Comment
+        editInput={this._EditInput}
+        commentid={item.id}
+        press={false}
+        incomment={true}
+        mutationLike={mutationLike}
+        navigation={navigation}
+        commentModal={commentModal}
+        deleteModal={this.props.deleteModal}
+        wrapCommentid={this.props.commentid}
+      />
+    );
   };
 
   render() {
@@ -75,51 +124,56 @@ class InCommentForm extends React.Component<Props, State> {
         </View>
         <Query query={GetInComment} variables={{ id: this.props.commentid }}>
           {({ data, loading }) => {
-            if (loading) return null;
+            if (loading) return <ActivityIndicator />;
             const comment = data.GetInComment.comment;
             return (
               <>
-                <Comment
-                  commentid={comment.id}
-                  press={false}
-                  mutationLike={mutationLike}
-                  navigation={this.props.navigation}
-                  commentModal={this.props.commentModal}
-                  deleteModal={this.props.deleteModal}
-                />
-                <TouchableOpacity
-                  onPress={() => {
-                    this._commentInputShow(true);
-                  }}
-                >
-                  <View style={styles.commentInput}>
-                    <View style={{ marginLeft: 25 }}>
-                      <Text style={styles.commentInputText}>답글 입력하기</Text>
-                    </View>
-                  </View>
-                </TouchableOpacity>
                 <ScrollView scrollEventThrottle={16}>
-                  {comment.incomment !== null
-                    ? comment.incomment.map((comment, key) => {
-                        return (
-                          <Comment
-                            commentid={comment.id}
-                            press={false}
-                            incomment={true}
-                            mutationLike={mutationLike}
-                            navigation={this.props.navigation}
-                            commentModal={this.props.commentModal}
-                            key={key}
-                            deleteModal={this.props.deleteModal}
-                          />
-                        );
-                      })
-                    : null}
+                  <Comment
+                    editInput={this._EditInput}
+                    commentid={comment.id}
+                    press={false}
+                    mutationLike={mutationLike}
+                    navigation={this.props.navigation}
+                    commentModal={this.props.commentModal}
+                    deleteModal={this.props.deleteModal}
+                    flowerid={this.props.flowerid}
+                  />
+                  <TouchableOpacity
+                    onPress={() => {
+                      this._commentInputShow(true);
+                    }}
+                  >
+                    <View style={styles.commentInput}>
+                      <View style={{ marginLeft: 25 }}>
+                        <Text style={styles.commentInputText}>
+                          답글 입력하기
+                        </Text>
+                      </View>
+                    </View>
+                  </TouchableOpacity>
+                  {this.state.loading ? (
+                    <ActivityIndicator />
+                  ) : (
+                    <FlatList
+                      data={comment.incomment}
+                      renderItem={this._renderRow}
+                      keyExtractor={(item, index) => index.toString()}
+                      onEndReachedThreshold={0}
+                      scrollEnabled={false}
+                    />
+                  )}
                 </ScrollView>
                 <CommentInput
                   show={this.state.show}
                   commentInputShow={this._commentInputShow}
                   commentid={comment.id}
+                />
+                <EditCommentInput
+                  show={this.state.editShow}
+                  commentid={this.state.editCommentid}
+                  text={this.state.editText}
+                  editCommentInputShow={this._EditInputShow}
                 />
               </>
             );

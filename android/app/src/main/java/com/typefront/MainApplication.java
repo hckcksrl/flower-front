@@ -3,6 +3,8 @@ package com.typefront;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import org.devio.rn.splashscreen.SplashScreenReactPackage;
+import com.reactnativecommunity.slider.ReactSliderPackage;
 import co.jootopia.kakao.link.RNKakaoLinkPackage;
 import com.reactnativecommunity.asyncstorage.AsyncStoragePackage;
 import com.dooboolab.kakaologins.RNKakaoLoginsPackage;
@@ -31,6 +33,8 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+            new SplashScreenReactPackage(),
+            new ReactSliderPackage(),
             new RNKakaoLinkPackage(),
             new AsyncStoragePackage(),
             new RNKakaoLoginsPackage(),

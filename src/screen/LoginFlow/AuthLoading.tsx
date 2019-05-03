@@ -6,29 +6,28 @@ import Indicate from "./Indicate";
 
 interface Props {
   navigation: NavigationScreenProp<any, any>;
-}
-interface State {
   userid: number;
+  loading: () => void;
 }
 
-class AuthLoading extends React.Component<Props, State> {
+class AuthLoading extends React.Component<Props> {
   constructor(props) {
     super(props);
   }
 
   render() {
-    const id = this.props.navigation.getParam("userid");
-    const userid = parseInt(id);
+    const { userid, navigation } = this.props;
     return (
       <Query query={UserFind} variables={{ userid: userid }}>
         {({ data, loading, client }) => {
           if (loading) return null;
           return (
             <Indicate
-              navigation={this.props.navigation}
+              navigation={navigation}
               userid={userid}
               data={data}
               client={client}
+              loading={this.props.loading}
             />
           );
         }}

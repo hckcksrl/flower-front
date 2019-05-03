@@ -1,27 +1,117 @@
-import { createBottomTabNavigator } from "react-navigation";
+import {
+  createBottomTabNavigator,
+  createStackNavigator
+} from "react-navigation";
 import NavigationHeader from "../component/NavigationHeader";
 import Height, { Width } from "../helper/Dimension";
 import { FlowerListNavigation } from "./FlowerListNavigation";
 import Library from "../screen/Library/Library";
 import { createSwitchNavigator } from "react-navigation";
-import Login from "../screen/Library/Login";
-import AuthLoading from "../screen/Library/AuthLoading";
-import Profile from "../screen/Library/Profile";
+import Login from "../screen/LoginFlow/Login";
+import Profile from "../screen/LoginFlow/Profile";
+import CollectionContainer from "../screen/CollectionFlowers/CollectionFlowersContainer";
+import { View } from "react-native";
+import Check from "../screen/LoginFlow/Check";
+import RecentListContainer from "../screen/RecentList/RecentListContainer";
+import LikeListContainer from "../screen/LikeList/LikeListContainer";
+import SavePageContainer from "../screen/SavePage/SavePageContainer";
+import SaveFlowerContainer from "../screen/SaveFlower/SaveFlowerContainer";
+import MyPage from "../screen/MyPage/MyPage";
+import EditProfile from "../screen/MyPage/EditProfile/EditProfile";
 
-const AuthSwitchNavigator = createSwitchNavigator({
-  Login: {
-    screen: Login
+const LibraryStack = createStackNavigator(
+  {
+    MyLibrary: {
+      screen: Library,
+      navigationOptions: {
+        header: null
+      }
+    },
+    LikeFlowers: {
+      screen: LikeListContainer,
+      navigationOptions: {
+        header: null
+      }
+    },
+    RecentFlowers: {
+      screen: RecentListContainer,
+      navigationOptions: {
+        header: null
+      }
+    },
+    SaveFlowers: {
+      screen: SaveFlowerContainer,
+      navigationOptions: {
+        header: null
+      }
+    },
+    TypeFlowers: {
+      screen: CollectionContainer,
+      navigationOptions: {
+        header: null
+      }
+    },
+    SavePage: {
+      screen: SavePageContainer,
+      navigationOptions: {
+        header: null
+      }
+    },
+    MyPage: {
+      screen: MyPage,
+      navigationOptions: {
+        header: null
+      }
+    },
+    TalkPage: {
+      screen: View,
+      navigationOptions: {
+        header: null
+      }
+    },
+    EditProfile: {
+      screen: EditProfile,
+      navigationOptions: {
+        header: null
+      }
+    }
   },
-  AuthLoading: {
-    screen: AuthLoading
+  { mode: "card", initialRouteKey: "MyLibrary", initialRouteName: "MyLibrary" }
+);
+
+const AuthFlowStack = createStackNavigator(
+  {
+    Login: {
+      screen: Login,
+      navigationOptions: {
+        header: null
+      }
+    },
+    Profile: {
+      screen: Profile
+    }
   },
-  Profile: {
-    screen: Profile
-  },
-  MyLibrary: {
-    screen: Library
+  {
+    initialRouteName: "Login"
   }
-});
+);
+
+const AuthSwitchNavigator = createSwitchNavigator(
+  {
+    Check: {
+      screen: Check
+    },
+    Auth: {
+      screen: AuthFlowStack
+    },
+    MyLibrary: {
+      screen: LibraryStack
+    }
+  },
+  {
+    initialRouteName: "Check"
+  }
+);
 
 export const TabNavigation = createBottomTabNavigator(
   {

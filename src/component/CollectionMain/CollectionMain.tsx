@@ -75,6 +75,9 @@ const CollectionMain: React.SFC<IProps> = (props: IProps) => {
           style={styles.mainScroll}
           useScrollView={true}
           inactiveSlideScale={1}
+          apparitionDelay={1}
+          lockScrollWhileSnapping={false}
+          removeClippedSubviews={false}
         />
       </View>
     </View>

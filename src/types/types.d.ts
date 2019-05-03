@@ -55,6 +55,23 @@ export interface GetFlowerResponse {
   };
 }
 
+export interface MyLibraryResponse {
+  id: number;
+  name: string;
+  saveFlower: {
+    id: number;
+    flowers: {
+      id: number;
+      name: string;
+      image: string;
+      type: {
+        id: number;
+        name: string;
+      };
+    };
+  }[];
+}
+
 export interface GetLibraryResponse {
   id: number;
   name: string;

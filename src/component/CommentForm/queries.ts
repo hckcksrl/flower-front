@@ -13,6 +13,7 @@ export const GetLike = gql`
 export const GetInComment = gql`
   query GetInComment($id: Int!) {
     GetInComment(id: $id) {
+      mine
       comment {
         id
         users {
@@ -40,6 +41,24 @@ export const CreateComment = gql`
       flowerid: $flowerid
       commentid: $commentid
     ) {
+      result
+      error
+    }
+  }
+`;
+
+export const EditComment = gql`
+  mutation EditComment($id: Int!, $comment: String!) {
+    EditComment(id: $id, comment: $comment) {
+      result
+      error
+    }
+  }
+`;
+
+export const DeleteComment = gql`
+  mutation DeleteComment($id: Int!) {
+    DeleteComment(id: $id) {
       result
       error
     }

@@ -3,9 +3,9 @@ import {
   View,
   Text,
   TouchableOpacity,
-  ScrollView,
   StyleSheet,
-  Dimensions
+  Dimensions,
+  ActivityIndicator
 } from "react-native";
 import MaterIcon from "react-native-vector-icons/MaterialCommunityIcons";
 import { Width } from "../../helper/Dimension";
@@ -14,9 +14,10 @@ import Modal from "react-native-modal";
 import InCommentForm from "./InCommentForm";
 import CommentInput from "./CommentInput";
 import { GetComResponse } from "../../types/types";
-import { NavigationScreenProp } from "react-navigation";
+import { NavigationScreenProp, FlatList } from "react-navigation";
 import { Alerts } from "../../helper/Alert";
 import { isSignedIn } from "../../helper/Auth";
+import EditCommentInput from "./EditCommentInput";
 
 interface Props {
   data: GetComResponse;
@@ -32,10 +33,13 @@ interface State {
   commentid: number;
   comment: any;
   token: any;
+  loading: boolean;
+  editText: string;
+  editCommentid: number;
+  editShow: boolean;
 }
 
 class CommentForm extends React.Component<Props, State> {
-  public commentView;
   constructor(props) {
     super(props);
     this.state = {
@@ -43,10 +47,27 @@ class CommentForm extends React.Component<Props, State> {
       commentModal: false,
       commentid: 0,
       comment: null,
-      token: null
+      token: null,
+      loading: true,
+      editText: "",
+      editCommentid: 0,
+      editShow: false
     };
-    this.commentView;
   }
+
+  _EditInput = (text, id, show) => {
+    this.setState({
+      editText: text,
+      editCommentid: id,
+      editShow: show
+    });
+  };
+
+  _EditInputShow = boolean => {
+    this.setState({
+      editShow: boolean
+    });
+  };
 
   _inCommentModal = commentid => {
     this.setState({
@@ -72,29 +93,9 @@ class CommentForm extends React.Component<Props, State> {
   };
 
   componentDidMount = () => {
-    const {
-      data: {
-        GetComment: { comment }
-      },
-      mutationLike,
-      navigation,
-      commentModal
-    } = this.props;
-    this.commentView = comment.map((comment, key) => {
-      return (
-        <View key={key}>
-          <Comment
-            commentid={comment.id}
-            press={true}
-            mutationLike={mutationLike}
-            modal={this._inCommentModal}
-            navigation={navigation}
-            commentModal={commentModal}
-            deleteModal={this._delete}
-          />
-        </View>
-      );
-    });
+    setTimeout(() => {
+      this.setState({ loading: false });
+    }, 500);
   };
 
   componentWillReceiveProps(nextProps) {}
@@ -105,14 +106,30 @@ class CommentForm extends React.Component<Props, State> {
       .catch(err => alert("An error occurred"));
   };
 
+  _renderRow = ({ item }) => {
+    const { mutationLike, navigation, commentModal, flowerid } = this.props;
+    return (
+      <Comment
+        commentid={item.id}
+        press={true}
+        mutationLike={mutationLike}
+        modal={this._inCommentModal}
+        navigation={navigation}
+        commentModal={commentModal}
+        deleteModal={this._delete}
+        editInput={this._EditInput}
+        flowerid={flowerid}
+      />
+    );
+  };
+
   render() {
     const {
       data: {
         GetComment: { comment }
       },
       mutationLike,
-      navigation,
-      commentModal
+      navigation
     } = this.props;
     return (
       <View style={styles.scrollableModal}>
@@ -131,25 +148,17 @@ class CommentForm extends React.Component<Props, State> {
             </TouchableOpacity>
           </View>
         </View>
-        <ScrollView scrollEventThrottle={16} style={{ marginHorizontal: 15 }}>
-          {comment !== null
-            ? comment.map((comment, key) => {
-                return (
-                  <View key={key}>
-                    <Comment
-                      commentid={comment.id}
-                      press={true}
-                      mutationLike={mutationLike}
-                      modal={this._inCommentModal}
-                      navigation={navigation}
-                      commentModal={commentModal}
-                      deleteModal={this._delete}
-                    />
-                  </View>
-                );
-              })
-            : null}
-        </ScrollView>
+        {this.state.loading ? (
+          <ActivityIndicator />
+        ) : (
+          <FlatList
+            style={{ paddingHorizontal: 15 }}
+            data={comment}
+            renderItem={this._renderRow}
+            keyExtractor={(item, index) => index.toString()}
+            onEndReachedThreshold={0}
+          />
+        )}
         <Modal isVisible={this.state.commentModal} style={styles.bottomModal}>
           <InCommentForm
             mutationLike={mutationLike}
@@ -157,6 +166,7 @@ class CommentForm extends React.Component<Props, State> {
             commentid={this.state.commentid}
             navigation={navigation}
             commentModal={this.props.commentModal}
+            flowerid={this.props.flowerid}
           />
         </Modal>
 
@@ -164,6 +174,12 @@ class CommentForm extends React.Component<Props, State> {
           commentInputShow={this._commentInputShow}
           show={this.state.show}
           flowerid={this.props.flowerid}
+        />
+        <EditCommentInput
+          show={this.state.editShow}
+          commentid={this.state.editCommentid}
+          text={this.state.editText}
+          editCommentInputShow={this._EditInputShow}
         />
       </View>
     );

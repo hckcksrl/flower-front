@@ -19,7 +19,9 @@ export const FlowerNavigation = createStackNavigator(
     }
   },
   {
-    // mode: "modal"
+    mode: "card",
+    initialRouteKey: "Main",
+    initialRouteName: "Main"
   }
 );
 

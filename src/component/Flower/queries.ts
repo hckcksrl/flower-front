@@ -8,3 +8,12 @@ export const UpHit = gql`
     }
   }
 `;
+
+export const CreateRecent = gql`
+  mutation CreateRecent($id: Int!) {
+    CreateRecent(id: $id) {
+      result
+      error
+    }
+  }
+`;

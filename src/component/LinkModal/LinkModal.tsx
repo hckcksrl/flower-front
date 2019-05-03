@@ -6,15 +6,13 @@ import { FlowerResponse } from "src/types/types";
 
 interface Props {
   flower: FlowerResponse;
+  modal: (type: string, boolean: boolean) => void;
 }
 
 interface State {
   title: string;
   imageURL: string;
   link: {
-    webURL: string | undefined;
-    mobileWebURL: string | undefined;
-    androidExecutionParams: string | undefined;
     iosExecutionParams: string | undefined;
   };
   desc: string;
@@ -26,9 +24,6 @@ class LinkModal extends React.Component<Props, State> {
     this.state = {
       title: "",
       link: {
-        webURL: "",
-        mobileWebURL: "",
-        androidExecutionParams: "",
         iosExecutionParams: ""
       },
       imageURL: "",
@@ -47,7 +42,8 @@ class LinkModal extends React.Component<Props, State> {
           desc,
           imageWidth: 240,
           imageHeight: 240
-        } //required
+        }, //required,
+        buttons: [{ title: "앱으로 보기", link }]
       };
       const response = await RNKakaoLink.link(options);
       console.log(response);
@@ -56,15 +52,18 @@ class LinkModal extends React.Component<Props, State> {
     }
   };
 
+  _link = async () => {
+    const { modal } = this.props;
+    modal("link", false);
+    await this.linkFeed();
+  };
+
   componentWillMount() {
     this.setState({
       title: this.props.flower.name,
       imageURL: this.props.flower.image,
       link: {
-        webURL: "",
-        mobileWebURL: "",
-        androidExecutionParams: "",
-        iosExecutionParams: ""
+        iosExecutionParams: `id=${this.props.flower.id}`
       },
       desc: this.props.flower.type.name
     });
@@ -77,7 +76,7 @@ class LinkModal extends React.Component<Props, State> {
           <Text>공유</Text>
         </View>
         <View>
-          <Button onPress={this.linkFeed} title="카카오톡으로 공유하기" />
+          <Button onPress={this._link} title="카카오톡으로 공유하기" />
         </View>
       </View>
     );

@@ -1,11 +1,9 @@
 import React, { Component } from "react";
-import { View } from "react-native";
-import { NavigationScreenProp, NavigationActions } from "react-navigation";
+import { ActivityIndicator, Linking } from "react-native";
+import { NavigationScreenProp } from "react-navigation";
 import { Query } from "react-apollo";
 import HomePresenter from "./HomePresenter";
 import { GetType } from "./queries";
-import { getToken } from "../../helper/Auth";
-import AsyncStorage from "@react-native-community/async-storage";
 
 interface Props {
   navigation: NavigationScreenProp<any, any>;
@@ -15,15 +13,37 @@ interface State {
   type: Array<{
     id: number;
   }>;
+  title: string;
 }
 class HomeContainer extends Component<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = {
       loading: false,
-      type: []
+      type: [],
+      title: ""
     };
   }
+
+  componentDidMount() {
+    Linking.addEventListener("url", this.handleOpenURL);
+  }
+
+  componentWillUnmount() {
+    Linking.removeEventListener("url", this.handleOpenURL);
+  }
+  handleOpenURL = event => {
+    this.navigate(event.url);
+  };
+  navigate = url => {
+    this.setState({ title: url });
+    const path = url.split("?");
+    const param = path[1];
+    let id = param.split("=")[1];
+    if (id && id > -1) {
+      this.props.navigation.navigate("SelectFlowers", { id: parseInt(id) });
+    }
+  };
 
   _refresh = refetch => {
     this.setState(
@@ -50,6 +70,10 @@ class HomeContainer extends Component<Props, State> {
   };
 
   render() {
+    const { loading } = this.state;
+    if (loading) {
+      return <ActivityIndicator />;
+    }
     return (
       <Query
         query={GetType}
@@ -59,7 +83,7 @@ class HomeContainer extends Component<Props, State> {
         onCompleted={this._complete}
       >
         {({ data, loading, refetch }) => {
-          if (loading) return <View />;
+          if (loading) return <ActivityIndicator />;
           return (
             <HomePresenter
               type={this.state.type}
@@ -67,6 +91,7 @@ class HomeContainer extends Component<Props, State> {
               refetch={refetch}
               loading={this.state.loading}
               {...this.props}
+              title={this.state.title}
             />
           );
         }}

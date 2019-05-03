@@ -1,6 +1,9 @@
 import React from "react";
 import { View, StyleSheet } from "react-native";
-import { TouchableOpacity } from "react-native-gesture-handler";
+import {
+  TouchableOpacity,
+  TouchableNativeFeedback
+} from "react-native-gesture-handler";
 import Icon from "react-native-vector-icons/FontAwesome";
 import MaterIcon from "react-native-vector-icons/MaterialCommunityIcons";
 import { NavigationScreenProp } from "react-navigation";
@@ -8,6 +11,7 @@ import { Alerts } from "../../helper/Alert";
 import { isSignedIn } from "../../helper/Auth";
 import { GetLikeResponse } from "../../types/types";
 import { GetLike } from "../CommentForm/queries";
+import { GetUserLike } from "../../screen/LikeList/queries";
 
 interface Props {
   id: number;
@@ -42,7 +46,7 @@ class FlowerBottomBar extends React.Component<Props, State> {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.like) {
+    if (nextProps.likes) {
       this.setState({ like: this.props.likes.result });
     }
   }
@@ -53,7 +57,10 @@ class FlowerBottomBar extends React.Component<Props, State> {
     if (token) {
       mutationLike({
         variables: { flowerid: id },
-        refetchQueries: [{ query: GetLike, variables: { flowerid: id } }]
+        refetchQueries: [
+          { query: GetLike, variables: { flowerid: id } },
+          { query: GetUserLike }
+        ]
       });
     } else {
       Alerts(navigation);
