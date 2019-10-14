@@ -1,8 +1,8 @@
-# flower-front
-flower app frontEnd
+# Flower Front App
 
-## Library
+# Stack
 
-## Flower Content Page
-Like Ok
-Comment InComment
+* React-Native
+* KaKao-API ( Link , Login )
+* Apollo
+
