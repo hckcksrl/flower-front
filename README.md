@@ -5,4 +5,4 @@
 * React-Native
 * KaKao-API ( Link , Login )
 * Apollo
-
+* TypeScript
