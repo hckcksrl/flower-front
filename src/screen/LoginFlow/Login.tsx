@@ -5,7 +5,6 @@ import {
   ActivityIndicator,
   Text,
   Dimensions,
-  TouchableOpacity
 } from "react-native";
 import { Button } from "react-native-elements";
 import RNKakaoLogins from "react-native-kakao-logins";

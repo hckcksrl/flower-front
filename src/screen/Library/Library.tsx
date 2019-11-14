@@ -37,17 +37,6 @@ class Library extends React.Component<NavigationScreenProps, State> {
     };
   }
 
-  // _logout = async (Logout, client) => {
-  //   await client.clearStore();
-  //   await AsyncStorage.removeItem("token");
-  //   const resetAction = StackActions.reset({
-  //     index: 0,
-  //     key: null,
-  //     actions: [NavigationActions.navigate({ routeName: "Main" })]
-  //   });
-  //   this.props.navigation.dispatch(resetAction);
-  // };
-
   componentWillReceiveProps(nextProps) {}
 
   _renderItem = ({ item }) => {
@@ -114,6 +103,7 @@ class Library extends React.Component<NavigationScreenProps, State> {
                         inactiveSlideScale={1}
                         inactiveSlideOpacity={1}
                         activeSlideAlignment={"start"}
+                        removeClippedSubviews={false}
                       />
                     </View>
                   </>

@@ -84,20 +84,3 @@ class LinkModal extends React.Component<Props, State> {
 }
 
 export default LinkModal;
-// const linkObject = {
-//   webURL: "https://developers.kakao.com/docs/android/kakaotalk-link", //optional
-//   mobileWebURL: "https://developers.kakao.com/docs/android/kakaotalk-link", //optional
-//   androidExecutionParams: "shopId=1&itemId=24", //optional For Linking URL
-//   iosExecutionParams: "shopId=1&itemId=24" //optional For Linking URL
-// };
-
-// const contentObject = {
-//   title: "제목",
-//   link: linkObject,
-//   imageURL:
-//     "http://mud-kage.kakao.co.kr/dn/NTmhS/btqfEUdFAUf/FjKzkZsnoeE4o19klTOVI1/openlink_640x640s.jpg",
-
-//   desc: "설명", //optional
-//   imageWidth: 240, //optional
-//   imageHeight: 240 //optional
-// };

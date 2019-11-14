@@ -104,39 +104,24 @@ export interface GetLikeResponse {
   error?: string;
   like_count: number;
 }
-// export interface CommentResponse {
-//   id: number;
-//   comment: string;
-//   createComment: string;
-//   likes: { id: number }[];
-//   users: { id: number };
-//   incomment: {
-//     id: number;
-//     comment: string;
-//     users: {
-//       id: number;
-//     };
-//   }[];
-// }
 
-// export interface GetFlowerResponse {
-//   GetFlower: {
-//     result: boolean;
-//     error?: string;
-//     flower: {
-//       id: number;
-//       name: string;
-//       hits: number;
-//       image: string;
-//       content: string;
-//       type: {
-//         id: number;
-//         name: string;
-//       };
-//       images: {
-//         image: string;
-//         content: string;
-//       }[];
-//     };
-//   };
-// }
+export interface GetCollection {
+  result: boolean;
+  error?: string;
+  collection: Collection[];
+}
+
+export interface Collection {
+  id: number;
+  name: string;
+  view: boolean;
+  flowers: {
+    id: number;
+    name: string;
+    image: string;
+    type: {
+      id: number;
+      name: string;
+    };
+  }[];
+}

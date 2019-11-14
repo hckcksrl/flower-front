@@ -1,6 +1,6 @@
 import React from "react";
 import { ActivityIndicator } from "react-native";
-import { NavigationScreenProp, NavigationActions } from "react-navigation";
+import { NavigationScreenProp } from "react-navigation";
 import AsyncStorage from "@react-native-community/async-storage";
 import fetch from "node-fetch";
 
@@ -54,6 +54,7 @@ class Indicate extends React.Component<Props> {
                 result
                 error
                 token
+                nickname
               }
             }
           `
@@ -61,8 +62,10 @@ class Indicate extends React.Component<Props> {
         })
           .then(result => result.json())
           .then(async result => {
+            console.log(result);
             await client.resetStore();
             await AsyncStorage.setItem("token", result.data.Logins.token);
+            await AsyncStorage.setItem("nickname", result.data.Logins.nickname);
             await this.props.navigation.navigate("MyLibrary", {
               token: result.data.Logins.token
             });

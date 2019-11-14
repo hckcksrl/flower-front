@@ -1,6 +1,7 @@
 import { createStackNavigator } from "react-navigation";
 import CollectionFlowersContainer from "../screen/CollectionFlowers";
 import HomeContainer from "../screen/Home";
+import TypeFlowerContainer from "../screen/TypeFlowers/TypeFlowersContainer";
 
 export const FlowerListNavigation = createStackNavigator({
   Home: {
@@ -16,7 +17,7 @@ export const FlowerListNavigation = createStackNavigator({
     }
   },
   TypeFlowers: {
-    screen: CollectionFlowersContainer,
+    screen: TypeFlowerContainer,
     navigationOptions: {
       header: null
     }

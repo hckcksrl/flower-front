@@ -12,3 +12,26 @@ export const GetType = gql`
     }
   }
 `;
+
+export const GetCollection = gql`
+  {
+    GetCollection {
+      result
+      error
+      collection {
+        id
+        name
+        view
+        flowers {
+          id
+          name
+          image
+          type {
+            id
+            name
+          }
+        }
+      }
+    }
+  }
+`;

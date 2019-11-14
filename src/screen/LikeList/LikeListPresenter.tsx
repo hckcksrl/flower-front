@@ -24,16 +24,6 @@ interface Props {
 
 interface State {
   fetch: boolean;
-  likes: {
-    flowers: {
-      name: string;
-      image: string;
-      type: {
-        id: number;
-        name: string;
-      };
-    };
-  }[];
   count: number;
 }
 
@@ -42,21 +32,8 @@ class LikeListPresenter extends React.Component<Props, State> {
     super(props);
     this.state = {
       fetch: false,
-      likes: [],
       count: 1
     };
-  }
-
-  componentWillMount() {
-    const { likes } = this.props;
-    const sliceLikes = likes.slice(
-      (this.state.count - 1) * 3,
-      (this.state.count - 1) * 3 + 3
-    );
-    this.setState({
-      fetch: true,
-      likes: sliceLikes
-    });
   }
 
   componentWillReceiveProps(nextProps) {
@@ -78,56 +55,29 @@ class LikeListPresenter extends React.Component<Props, State> {
     );
   };
 
-  _handleLoad = () => {
-    const { likes } = this.props;
-    if ((this.state.count - 1) * 3 + 2 <= likes.length) {
-      this.setState(
-        {
-          count: this.state.count + 1,
-          fetch: true
-        },
-        () => this._getData(this.state.count)
-      );
-    } else {
-      this.setState({
-        fetch: false
-      });
-    }
-  };
-
-  _getData = count => {
-    const { likes } = this.props;
-    const sliceLikes = likes.slice((count - 1) * 3, (count - 1) * 3 + 3);
-    this.setState({
-      likes: this.state.likes.concat(sliceLikes),
-      fetch: false
-    });
-  };
-
-  _footRender = () => {
-    return this.state.fetch ? <ActivityIndicator size="large" /> : null;
-  };
-
   _header = () => {
     const { likes } = this.props;
     return <FlowerHeader header={"좋아요 표시한 꽃"} sum={likes.length} />;
   };
 
   render() {
-    const { navigation } = this.props;
+    const { navigation, likes } = this.props;
     return (
       <View style={{ flex: 1, paddingTop: getStatusBarHeight() }}>
         <View style={styles.container}>
           <NavigationHeader header={"arrow-left"} navigation={navigation} />
-          <FlatList
-            ListHeaderComponent={this._header}
-            data={this.state.likes}
-            renderItem={this._renderRow}
-            keyExtractor={(item, index) => index.toString()}
-            onEndReached={this._handleLoad}
-            onEndReachedThreshold={0}
-            ListFooterComponent={this._footRender}
+          <FlowerHeader
+            header={"좋아요 표시한 꽃"}
+            sum={this.props.likes.length}
           />
+          {likes.length === 0 ? null : (
+            <FlatList
+              data={this.props.likes}
+              renderItem={this._renderRow}
+              keyExtractor={(item, index) => index.toString()}
+              onEndReachedThreshold={0}
+            />
+          )}
         </View>
       </View>
     );

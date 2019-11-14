@@ -3,7 +3,7 @@ import { ActivityIndicator, Linking } from "react-native";
 import { NavigationScreenProp } from "react-navigation";
 import { Query } from "react-apollo";
 import HomePresenter from "./HomePresenter";
-import { GetType } from "./queries";
+import { GetCollection } from "./queries";
 
 interface Props {
   navigation: NavigationScreenProp<any, any>;
@@ -13,15 +13,13 @@ interface State {
   type: Array<{
     id: number;
   }>;
-  title: string;
 }
 class HomeContainer extends Component<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = {
       loading: false,
-      type: [],
-      title: ""
+      type: []
     };
   }
 
@@ -36,7 +34,6 @@ class HomeContainer extends Component<Props, State> {
     this.navigate(event.url);
   };
   navigate = url => {
-    this.setState({ title: url });
     const path = url.split("?");
     const param = path[1];
     let id = param.split("=")[1];
@@ -55,17 +52,10 @@ class HomeContainer extends Component<Props, State> {
   };
 
   getData = refetch => {
-    setTimeout(() => {
+    refetch().then(() => {
       this.setState({
         loading: false
       });
-      refetch;
-    }, 1500);
-  };
-
-  _complete = data => {
-    this.setState({
-      type: data.GetFlowerType.type
     });
   };
 
@@ -76,22 +66,21 @@ class HomeContainer extends Component<Props, State> {
     }
     return (
       <Query
-        query={GetType}
+        query={GetCollection}
         fetchPolicy={"network-only"}
         skip={false}
         notifyOnNetworkStatusChange={true}
-        onCompleted={this._complete}
+        pollInterval={1000 * 60 * 60 * 24}
       >
         {({ data, loading, refetch }) => {
           if (loading) return <ActivityIndicator />;
           return (
             <HomePresenter
-              type={this.state.type}
+              data={data.GetCollection}
               refresh={this._refresh}
               refetch={refetch}
               loading={this.state.loading}
               {...this.props}
-              title={this.state.title}
             />
           );
         }}

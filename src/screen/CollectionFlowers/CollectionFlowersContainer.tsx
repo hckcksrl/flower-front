@@ -9,9 +9,7 @@ interface Props {
   navigation: NavigationScreenProp<any, any>;
 }
 interface State {
-  loading: boolean;
   header: string;
-  typeid: number;
   refetch: any;
   flowers: Array<{
     id: number;
@@ -28,9 +26,7 @@ class CollectionContainer extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = {
-      loading: false,
       refetch: null,
-      typeid: 0,
       header: "",
       flowers: [
         {
@@ -49,57 +45,17 @@ class CollectionContainer extends React.Component<Props, State> {
   componentWillMount() {
     this.setState({
       header: this.props.navigation.getParam("header", "default"),
-      typeid: this.props.navigation.getParam("typeid", "default")
+      flowers: this.props.navigation.getParam("flowers", "default")
     });
   }
 
-  _getData = refetch => {
-    setTimeout(() => {
-      this.setState({
-        loading: false
-      });
-      refetch();
-    }, 1500);
-  };
-
-  _complete = data => {
-    this.setState({
-      flowers: data.GetFlowers.flowers
-    });
-  };
-
-  _refresh = refetch => {
-    this.setState(
-      {
-        loading: true
-      },
-      () => this._getData(refetch)
-    );
-  };
-
   render() {
-    const { typeid } = this.state;
     return (
-      <Query
-        query={GetFlowers}
-        variables={{ typeid: typeid }}
-        fetchPolicy={"network-only"}
-        skip={false}
-        notifyOnNetworkStatusChange={true}
-        onCompleted={this._complete}
-      >
-        {({ data, loading }) => {
-          if (loading) return <View />;
-          return (
-            <CollectionPresenter
-              flowers={this.state.flowers}
-              loading={this.state.loading}
-              header={this.state.header}
-              {...this.props}
-            />
-          );
-        }}
-      </Query>
+      <CollectionPresenter
+        flowers={this.state.flowers}
+        header={this.state.header}
+        {...this.props}
+      />
     );
   }
 }

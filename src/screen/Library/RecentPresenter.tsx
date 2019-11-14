@@ -84,7 +84,8 @@ const styles = StyleSheet.create({
   image: {
     width: 247,
     height: 295,
-    borderRadius: 10
+    borderRadius: 10,
+    backgroundColor: "#f6f6f6"
   },
   nameContainer: {
     paddingTop: 7

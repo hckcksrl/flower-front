@@ -64,12 +64,23 @@
 		ED297163215061F000B7C4FE /* JavaScriptCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED297162215061F000B7C4FE /* JavaScriptCore.framework */; };
 		ED2971652150620600B7C4FE /* JavaScriptCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED2971642150620600B7C4FE /* JavaScriptCore.framework */; };
 		F2DA95EB76024A598743005D /* Ionicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E9D7E857FF52493CB4595085 /* Ionicons.ttf */; };
+		F61A8B1E23546E3700768FD2 /* libRNKakaoLink.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F61A8B1923546DF200768FD2 /* libRNKakaoLink.a */; };
+		F61A8B1F2354718000768FD2 /* libRCTWebSocket.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 139FDEF41B06529B00C62182 /* libRCTWebSocket.a */; };
 		F632929D22702476003CFEC1 /* libRCTCameraRoll.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F632929C2270245C003CFEC1 /* libRCTCameraRoll.a */; };
+		F642E1DA2355DE2600785CB0 /* libRNImagePicker.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F642E1D42355DE0B00785CB0 /* libRNImagePicker.a */; };
+		F642E1DB2355E3BB00785CB0 /* libRNKakaoLogins.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F6E9A2562272BE6B001AF795 /* libRNKakaoLogins.a */; };
+		F642E1DC2355E3C300785CB0 /* libRNKakaoLogins.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F6E9A2562272BE6B001AF795 /* libRNKakaoLogins.a */; };
+		F642E1DD2355E3CA00785CB0 /* libRNVectorIcons.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F657B154225EFEFF0048C34F /* libRNVectorIcons.a */; };
+		F642E1DE2355E3D000785CB0 /* libSplashScreen.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F66DB729227C053400AFF1FB /* libSplashScreen.a */; };
+		F642E1DF2355E3D800785CB0 /* libRNCSlider.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F6DB2D52227968A000501AD5 /* libRNCSlider.a */; };
+		F642E1E02355E3DD00785CB0 /* libRNFetchBlob.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F632925322701EF4003CFEC1 /* libRNFetchBlob.a */; };
+		F642E1E12355E3E200785CB0 /* libRNCViewpager.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F6DB2DA0227968C800501AD5 /* libRNCViewpager.a */; };
+		F642E1E22355E3E700785CB0 /* libRNFetchBlob.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F632925322701EF4003CFEC1 /* libRNFetchBlob.a */; };
+		F642E1E32355E3EC00785CB0 /* libRNCAsyncStorage.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F6DBC999227306670054EB45 /* libRNCAsyncStorage.a */; };
 		F657B158225F00040048C34F /* react-native-naver-font in Resources */ = {isa = PBXBuildFile; fileRef = F657B157225F00040048C34F /* react-native-naver-font */; };
 		F67F26182275639F00A3DEC4 /* KakaoCommon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F67F26172275639F00A3DEC4 /* KakaoCommon.framework */; };
 		F67F261A227563B600A3DEC4 /* KakaoLink.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F67F2619227563B600A3DEC4 /* KakaoLink.framework */; };
 		F67F261C227563C200A3DEC4 /* KakaoMessageTemplate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F67F261B227563C200A3DEC4 /* KakaoMessageTemplate.framework */; };
-		F67F267F22756B0A00A3DEC4 /* libRNKakaoLink.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F67F2663227566A000A3DEC4 /* libRNKakaoLink.a */; };
 		F6C2CF95225DD1BD002DCC40 /* libRNGestureHandler.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F6C2CF92225DD1AF002DCC40 /* libRNGestureHandler.a */; };
 		F6E9A25A2272BE79001AF795 /* KakaoOpenSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F6E9A2592272BE79001AF795 /* KakaoOpenSDK.framework */; };
 		F9555F0A0CF34437BB7F6FF1 /* FontAwesome5_Solid.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2C988038EEA942F098FBB94E /* FontAwesome5_Solid.ttf */; };
@@ -321,6 +332,13 @@
 			remoteGlobalIDString = 358F4ED71D1E81A9004DF814;
 			remoteInfo = RCTBlob;
 		};
+		F61A8B1823546DF200768FD2 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C6E65022E5DE405EB4FD92CB /* RNKakaoLink.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 134814201AA4EA6300B7C361;
+			remoteInfo = RNKakaoLink;
+		};
 		F632925222701EF4003CFEC1 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = D5969B3762CC4D3C8C16FAE4 /* RNFetchBlob.xcodeproj */;
@@ -342,9 +360,9 @@
 			remoteGlobalIDString = 58B5115D1A9E6B3D00147676;
 			remoteInfo = RCTCameraRoll;
 		};
-		F63292DE22702589003CFEC1 /* PBXContainerItemProxy */ = {
+		F642E1D32355DE0B00785CB0 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = D7D8A18A045545E8B6EA0C1B /* RNImagePicker.xcodeproj */;
+			containerPortal = F550991AFE14424F9175BE31 /* RNImagePicker.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = 014A3B5C1C6CF33500B6D375;
 			remoteInfo = RNImagePicker;
@@ -369,13 +387,6 @@
 			proxyType = 2;
 			remoteGlobalIDString = 3D7682761D8E76B80014119E;
 			remoteInfo = SplashScreen;
-		};
-		F67F2662227566A000A3DEC4 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = AD3B04B4A55845AAAC756F58 /* RNKakaoLink.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 134814201AA4EA6300B7C361;
-			remoteInfo = RNKakaoLink;
 		};
 		F6C2CF85225DD1AE002DCC40 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -500,20 +511,20 @@
 		832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTText.xcodeproj; path = "../node_modules/react-native/Libraries/Text/RCTText.xcodeproj"; sourceTree = "<group>"; };
 		8F282AE86AFB4F779A9F747B /* libRNGestureHandler-tvOS.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = "libRNGestureHandler-tvOS.a"; sourceTree = "<group>"; };
 		A31D58849BBA4FB4AF9E9B65 /* libRNCCameraRoll.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNCCameraRoll.a; sourceTree = "<group>"; };
-		AD3B04B4A55845AAAC756F58 /* RNKakaoLink.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNKakaoLink.xcodeproj; path = "../node_modules/react-native-kakao-links/ios/RNKakaoLink.xcodeproj"; sourceTree = "<group>"; };
 		ADBDB91F1DFEBF0600ED6528 /* RCTBlob.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTBlob.xcodeproj; path = "../node_modules/react-native/Libraries/Blob/RCTBlob.xcodeproj"; sourceTree = "<group>"; };
 		AF8CBE12E5DB4F2083A47335 /* RNCSlider.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNCSlider.xcodeproj; path = "../node_modules/@react-native-community/slider/ios/RNCSlider.xcodeproj"; sourceTree = "<group>"; };
 		BFA1FCF79EA643BC8734CAFA /* libSplashScreen.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libSplashScreen.a; sourceTree = "<group>"; };
+		C6E65022E5DE405EB4FD92CB /* RNKakaoLink.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNKakaoLink.xcodeproj; path = "../node_modules/react-native-kakao-links/ios/RNKakaoLink.xcodeproj"; sourceTree = "<group>"; };
 		C994AD8A179E4D9580A41CC6 /* RNVectorIcons.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNVectorIcons.xcodeproj; path = "../node_modules/react-native-vector-icons/RNVectorIcons.xcodeproj"; sourceTree = "<group>"; };
 		CEE407C988AE4452986ADEB0 /* FontAwesome5_Brands.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome5_Brands.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome5_Brands.ttf"; sourceTree = "<group>"; };
 		D5969B3762CC4D3C8C16FAE4 /* RNFetchBlob.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNFetchBlob.xcodeproj; path = "../node_modules/rn-fetch-blob/ios/RNFetchBlob.xcodeproj"; sourceTree = "<group>"; };
-		D7D8A18A045545E8B6EA0C1B /* RNImagePicker.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNImagePicker.xcodeproj; path = "../node_modules/react-native-image-picker/ios/RNImagePicker.xcodeproj"; sourceTree = "<group>"; };
 		D9BC91D5F0334453BE0A6689 /* FontAwesome.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome.ttf"; sourceTree = "<group>"; };
 		E017F0A0052E4C2D86D5CB69 /* SimpleLineIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = SimpleLineIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/SimpleLineIcons.ttf"; sourceTree = "<group>"; };
 		E9D7E857FF52493CB4595085 /* Ionicons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Ionicons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Ionicons.ttf"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		ED2971642150620600B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS12.0.sdk/System/Library/Frameworks/JavaScriptCore.framework; sourceTree = DEVELOPER_DIR; };
 		EE33A8F97A3441F2B31A2C5B /* Octicons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Octicons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Octicons.ttf"; sourceTree = "<group>"; };
+		F550991AFE14424F9175BE31 /* RNImagePicker.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNImagePicker.xcodeproj; path = "../node_modules/react-native-image-picker/ios/RNImagePicker.xcodeproj"; sourceTree = "<group>"; };
 		F63292972270245C003CFEC1 /* RCTCameraRoll.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTCameraRoll.xcodeproj; path = "../node_modules/react-native/Libraries/CameraRoll/RCTCameraRoll.xcodeproj"; sourceTree = "<group>"; };
 		F657B157225F00040048C34F /* react-native-naver-font */ = {isa = PBXFileReference; lastKnownFileType = folder; name = "react-native-naver-font"; path = "../node_modules/react-native-naver-font"; sourceTree = "<group>"; };
 		F67F26172275639F00A3DEC4 /* KakaoCommon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = KakaoCommon.framework; sourceTree = "<group>"; };
@@ -538,10 +549,12 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F67F267F22756B0A00A3DEC4 /* libRNKakaoLink.a in Frameworks */,
+				F642E1DF2355E3D800785CB0 /* libRNCSlider.a in Frameworks */,
 				ED297163215061F000B7C4FE /* JavaScriptCore.framework in Frameworks */,
 				F632929D22702476003CFEC1 /* libRCTCameraRoll.a in Frameworks */,
 				ADBDB9381DFEBF1600ED6528 /* libRCTBlob.a in Frameworks */,
+				F642E1DD2355E3CA00785CB0 /* libRNVectorIcons.a in Frameworks */,
+				F61A8B1E23546E3700768FD2 /* libRNKakaoLink.a in Frameworks */,
 				11D1A2F320CAFA9E000508D9 /* libRCTAnimation.a in Frameworks */,
 				146834051AC3E58100842450 /* libReact.a in Frameworks */,
 				00C302E51ABCBA2D00DB3ED1 /* libRCTActionSheet.a in Frameworks */,
@@ -549,23 +562,32 @@
 				00C302E81ABCBA2D00DB3ED1 /* libRCTImage.a in Frameworks */,
 				133E29F31AD74F7200F7D852 /* libRCTLinking.a in Frameworks */,
 				F6C2CF95225DD1BD002DCC40 /* libRNGestureHandler.a in Frameworks */,
+				F642E1DC2355E3C300785CB0 /* libRNKakaoLogins.a in Frameworks */,
 				F67F261C227563C200A3DEC4 /* KakaoMessageTemplate.framework in Frameworks */,
 				00C302E91ABCBA2D00DB3ED1 /* libRCTNetwork.a in Frameworks */,
 				139105C61AF99C1200B5F7CC /* libRCTSettings.a in Frameworks */,
 				F67F261A227563B600A3DEC4 /* KakaoLink.framework in Frameworks */,
 				832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */,
+				F642E1E22355E3E700785CB0 /* libRNFetchBlob.a in Frameworks */,
+				F61A8B1F2354718000768FD2 /* libRCTWebSocket.a in Frameworks */,
+				F642E1E12355E3E200785CB0 /* libRNCViewpager.a in Frameworks */,
 				00C302EA1ABCBA2D00DB3ED1 /* libRCTVibration.a in Frameworks */,
+				F642E1DE2355E3D000785CB0 /* libSplashScreen.a in Frameworks */,
 				139FDEF61B0652A700C62182 /* libRCTWebSocket.a in Frameworks */,
 				61EDBDCFD9FD46D4A1E2D5D7 /* libRNVectorIcons.a in Frameworks */,
 				7657DCD4E6874E34AB77F0D4 /* libRNFetchBlob.a in Frameworks */,
+				F642E1E32355E3EC00785CB0 /* libRNCAsyncStorage.a in Frameworks */,
+				F642E1DA2355DE2600785CB0 /* libRNImagePicker.a in Frameworks */,
 				F67F26182275639F00A3DEC4 /* KakaoCommon.framework in Frameworks */,
 				F6E9A25A2272BE79001AF795 /* KakaoOpenSDK.framework in Frameworks */,
 				4A454FFECEA346DBA58501A6 /* libRNImagePicker.a in Frameworks */,
 				E4D9CDA5BDFE41A196433EF9 /* libRNKakaoLogins.a in Frameworks */,
+				F642E1DB2355E3BB00785CB0 /* libRNKakaoLogins.a in Frameworks */,
 				E5A49D6BCF13480E944C498D /* libRNCAsyncStorage.a in Frameworks */,
 				77E84548AED54B908A95B820 /* libRNCSlider.a in Frameworks */,
 				36E54B56F35543868E15AEEA /* libRNCViewpager.a in Frameworks */,
 				98C71BBA9DCD4DD9A1EA6858 /* libSplashScreen.a in Frameworks */,
+				F642E1E02355E3DD00785CB0 /* libRNFetchBlob.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -789,13 +811,13 @@
 				C994AD8A179E4D9580A41CC6 /* RNVectorIcons.xcodeproj */,
 				D5969B3762CC4D3C8C16FAE4 /* RNFetchBlob.xcodeproj */,
 				77BE3F17B77C45E1AAE62E5D /* RNCCameraRoll.xcodeproj */,
-				D7D8A18A045545E8B6EA0C1B /* RNImagePicker.xcodeproj */,
 				1A1BC7DC388E4B6D90999613 /* RNKakaoLogins.xcodeproj */,
 				6008E0CFE62E45059A8F0AD9 /* RNCAsyncStorage.xcodeproj */,
-				AD3B04B4A55845AAAC756F58 /* RNKakaoLink.xcodeproj */,
 				AF8CBE12E5DB4F2083A47335 /* RNCSlider.xcodeproj */,
 				57893A1B1DF842F59C7889DF /* RNCViewpager.xcodeproj */,
 				5461615305EE435893609B94 /* SplashScreen.xcodeproj */,
+				C6E65022E5DE405EB4FD92CB /* RNKakaoLink.xcodeproj */,
+				F550991AFE14424F9175BE31 /* RNImagePicker.xcodeproj */,
 			);
 			name = Libraries;
 			sourceTree = "<group>";
@@ -845,6 +867,14 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		F61A8AE723546DF200768FD2 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				F61A8B1923546DF200768FD2 /* libRNKakaoLink.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		F632922A22701EF4003CFEC1 /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -869,10 +899,10 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		F63292DB22702589003CFEC1 /* Products */ = {
+		F642E1A32355DE0B00785CB0 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				F63292DF22702589003CFEC1 /* libRNImagePicker.a */,
+				F642E1D42355DE0B00785CB0 /* libRNImagePicker.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -890,14 +920,6 @@
 			isa = PBXGroup;
 			children = (
 				F66DB729227C053400AFF1FB /* libSplashScreen.a */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
-		F67F2633227566A000A3DEC4 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				F67F2663227566A000A3DEC4 /* libRNKakaoLink.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1155,12 +1177,12 @@
 					ProjectRef = 317DCC3EACA5456786229D06 /* RNGestureHandler.xcodeproj */;
 				},
 				{
-					ProductGroup = F63292DB22702589003CFEC1 /* Products */;
-					ProjectRef = D7D8A18A045545E8B6EA0C1B /* RNImagePicker.xcodeproj */;
+					ProductGroup = F642E1A32355DE0B00785CB0 /* Products */;
+					ProjectRef = F550991AFE14424F9175BE31 /* RNImagePicker.xcodeproj */;
 				},
 				{
-					ProductGroup = F67F2633227566A000A3DEC4 /* Products */;
-					ProjectRef = AD3B04B4A55845AAAC756F58 /* RNKakaoLink.xcodeproj */;
+					ProductGroup = F61A8AE723546DF200768FD2 /* Products */;
+					ProjectRef = C6E65022E5DE405EB4FD92CB /* RNKakaoLink.xcodeproj */;
 				},
 				{
 					ProductGroup = F6E9A2272272BE6A001AF795 /* Products */;
@@ -1417,6 +1439,13 @@
 			remoteRef = ADBDB9261DFEBF0700ED6528 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
+		F61A8B1923546DF200768FD2 /* libRNKakaoLink.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libRNKakaoLink.a;
+			remoteRef = F61A8B1823546DF200768FD2 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 		F632925322701EF4003CFEC1 /* libRNFetchBlob.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
@@ -1438,11 +1467,11 @@
 			remoteRef = F632929B2270245C003CFEC1 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		F63292DF22702589003CFEC1 /* libRNImagePicker.a */ = {
+		F642E1D42355DE0B00785CB0 /* libRNImagePicker.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
 			path = libRNImagePicker.a;
-			remoteRef = F63292DE22702589003CFEC1 /* PBXContainerItemProxy */;
+			remoteRef = F642E1D32355DE0B00785CB0 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		F657B154225EFEFF0048C34F /* libRNVectorIcons.a */ = {
@@ -1464,13 +1493,6 @@
 			fileType = archive.ar;
 			path = libSplashScreen.a;
 			remoteRef = F66DB728227C053400AFF1FB /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		F67F2663227566A000A3DEC4 /* libRNKakaoLink.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libRNKakaoLink.a;
-			remoteRef = F67F2662227566A000A3DEC4 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		F6C2CF86225DD1AE002DCC40 /* libjsi.a */ = {
@@ -1713,6 +1735,8 @@
 					"$(SRCROOT)/../node_modules/@react-native-community/slider/ios",
 					"$(SRCROOT)/../node_modules/@react-native-community/viewpager/ios",
 					"$(SRCROOT)/../node_modules/react-native-splash-screen/ios",
+					"$(SRCROOT)/../node_modules/react-native-kakao-links/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-image-picker/ios",
 				);
 				INFOPLIST_FILE = typeFrontTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
@@ -1764,6 +1788,8 @@
 					"$(SRCROOT)/../node_modules/@react-native-community/slider/ios",
 					"$(SRCROOT)/../node_modules/@react-native-community/viewpager/ios",
 					"$(SRCROOT)/../node_modules/react-native-splash-screen/ios",
+					"$(SRCROOT)/../node_modules/react-native-kakao-links/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-image-picker/ios",
 				);
 				INFOPLIST_FILE = typeFrontTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
@@ -1821,6 +1847,8 @@
 					"$(SRCROOT)/../node_modules/@react-native-community/slider/ios",
 					"$(SRCROOT)/../node_modules/@react-native-community/viewpager/ios",
 					"$(SRCROOT)/../node_modules/react-native-splash-screen/ios",
+					"$(SRCROOT)/../node_modules/react-native-kakao-links/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-image-picker/ios",
 				);
 				INFOPLIST_FILE = typeFront/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -1863,6 +1891,8 @@
 					"$(SRCROOT)/../node_modules/@react-native-community/slider/ios",
 					"$(SRCROOT)/../node_modules/@react-native-community/viewpager/ios",
 					"$(SRCROOT)/../node_modules/react-native-splash-screen/ios",
+					"$(SRCROOT)/../node_modules/react-native-kakao-links/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-image-picker/ios",
 				);
 				INFOPLIST_FILE = typeFront/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -1907,6 +1937,8 @@
 					"$(SRCROOT)/../node_modules/@react-native-community/slider/ios",
 					"$(SRCROOT)/../node_modules/@react-native-community/viewpager/ios",
 					"$(SRCROOT)/../node_modules/react-native-splash-screen/ios",
+					"$(SRCROOT)/../node_modules/react-native-kakao-links/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-image-picker/ios",
 				);
 				INFOPLIST_FILE = "typeFront-tvOS/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -1966,6 +1998,8 @@
 					"$(SRCROOT)/../node_modules/@react-native-community/slider/ios",
 					"$(SRCROOT)/../node_modules/@react-native-community/viewpager/ios",
 					"$(SRCROOT)/../node_modules/react-native-splash-screen/ios",
+					"$(SRCROOT)/../node_modules/react-native-kakao-links/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-image-picker/ios",
 				);
 				INFOPLIST_FILE = "typeFront-tvOS/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -2024,6 +2058,8 @@
 					"$(SRCROOT)/../node_modules/@react-native-community/slider/ios",
 					"$(SRCROOT)/../node_modules/@react-native-community/viewpager/ios",
 					"$(SRCROOT)/../node_modules/react-native-splash-screen/ios",
+					"$(SRCROOT)/../node_modules/react-native-kakao-links/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-image-picker/ios",
 				);
 				INFOPLIST_FILE = "typeFront-tvOSTests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
@@ -2082,6 +2118,8 @@
 					"$(SRCROOT)/../node_modules/@react-native-community/slider/ios",
 					"$(SRCROOT)/../node_modules/@react-native-community/viewpager/ios",
 					"$(SRCROOT)/../node_modules/react-native-splash-screen/ios",
+					"$(SRCROOT)/../node_modules/react-native-kakao-links/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-image-picker/ios",
 				);
 				INFOPLIST_FILE = "typeFront-tvOSTests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";

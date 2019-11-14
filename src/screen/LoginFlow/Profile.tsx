@@ -31,6 +31,7 @@ class Profile extends React.Component<Props, State> {
         if (data.data.Logins.result) {
           try {
             AsyncStorage.setItem("token", data.data.Logins.token);
+            AsyncStorage.setItem("nickname", data.data.Logins.nickname);
             this.props.navigation.navigate("MyLibrary");
           } catch (error) {
             return false;

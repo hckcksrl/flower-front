@@ -39,7 +39,6 @@ const styles = StyleSheet.create({
     paddingTop: Height * 0.0471,
     borderBottomWidth: 1,
     borderColor: "#d8d8d8",
-    // marginBottom: Height * 0.0471,
     justifyContent: "space-between"
   },
   header: {

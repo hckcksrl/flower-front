@@ -4,7 +4,6 @@ import {
   View,
   Dimensions,
   StyleSheet,
-  Keyboard
 } from "react-native";
 import MaterIcon from "react-native-vector-icons/MaterialCommunityIcons";
 import { TextInput, TouchableOpacity } from "react-native-gesture-handler";
@@ -63,7 +62,7 @@ class CommentInput extends React.Component<Props, State> {
     }
   };
 
-  componentWillReceiveProps(nextProps) {}
+  componentWillReceiveProps(nextProps) { }
 
   render() {
     const { show, commentInputShow } = this.props;
@@ -115,13 +114,13 @@ class CommentInput extends React.Component<Props, State> {
                   }}
                 </Mutation>
               ) : (
-                <View />
-              )}
+                  <View />
+                )}
             </View>
           </View>
         ) : (
-          <View />
-        )}
+            <View />
+          )}
       </KeyboardAvoidingView>
     );
   }
@@ -174,26 +173,3 @@ const styles = StyleSheet.create({
 });
 
 export default CommentInput;
-
-// _onBlur = () => {
-//   const { commentInputShow } = this.props;
-//   commentInputShow(false);
-//   this.setState({ height: 0 });
-//   if (this.state.text !== "") {
-//     Alert.alert("댓글을 삭제하시겠습니까?", "", [
-//       {
-//         text: "계속 작성",
-//         onPress: () => {
-//           commentInputShow(true);
-//         }
-//       },
-//       {
-//         text: "삭제",
-//         onPress: () => {
-//           commentInputShow(false);
-//           this.setState({ text: "", height: 0 });
-//         }
-//       }
-//     ]);
-//   }
-// };

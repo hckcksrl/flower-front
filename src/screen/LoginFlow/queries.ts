@@ -16,6 +16,7 @@ export const Logins = gql`
       result
       error
       token
+      nickname
     }
   }
 `;

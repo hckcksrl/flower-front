@@ -1,5 +1,4 @@
 import React from "react";
-// import { GetLibrary } from "../FlowerPage/queries";
 import { View } from "react-native";
 import gql from "graphql-tag";
 import { Query } from "react-apollo";

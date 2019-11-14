@@ -4,7 +4,6 @@ import {
   View,
   Dimensions,
   StyleSheet,
-  Keyboard
 } from "react-native";
 import MaterIcon from "react-native-vector-icons/MaterialCommunityIcons";
 import { TextInput, TouchableOpacity } from "react-native-gesture-handler";
@@ -111,13 +110,13 @@ class EditCommentInput extends React.Component<Props, State> {
                   }}
                 </Mutation>
               ) : (
-                <View />
-              )}
+                  <View />
+                )}
             </View>
           </View>
         ) : (
-          <View />
-        )}
+            <View />
+          )}
       </KeyboardAvoidingView>
     );
   }

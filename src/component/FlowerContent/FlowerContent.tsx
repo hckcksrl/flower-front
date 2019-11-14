@@ -3,7 +3,6 @@ import {
   StyleSheet,
   View,
   Dimensions,
-  Image,
   Text,
   TouchableOpacity,
   CameraRoll,
@@ -12,9 +11,12 @@ import {
   PermissionsAndroid,
   Alert
 } from "react-native";
+import AutoHeightImage from "react-native-auto-height-image";
+
 import Icon from "react-native-vector-icons/FontAwesome";
 import { NavigationScreenProp } from "react-navigation";
 import { GetLikeResponse } from "../../types/types";
+import { Width } from "../../helper/Dimension";
 YellowBox.ignoreWarnings([
   "Module RCTImagePickerManager requires main queue setup since it overrides `init`"
 ]);
@@ -62,9 +64,7 @@ const FlowerContent: React.SFC<Props> = (props: Props) => {
   };
   return (
     <>
-      <View style={styles.imageSize}>
-        <Image source={{ uri: image }} style={styles.imageSize} />
-      </View>
+      <AutoHeightImage width={Width} source={{ uri: image }} />
       <View style={styles.contentView}>
         <View>
           <Text style={styles.nameFont}>{name}</Text>
@@ -98,11 +98,10 @@ const FlowerContent: React.SFC<Props> = (props: Props) => {
           images.map((image, key) => {
             return (
               <View key={key} style={{ marginBottom: 30 }}>
-                <View style={styles.imageSize}>
-                  <Image
+                <View>
+                  <AutoHeightImage
+                    width={Width}
                     source={{ uri: image.image }}
-                    style={styles.imageSize}
-                    resizeMode="contain"
                   />
                 </View>
                 <View
@@ -129,8 +128,8 @@ const FlowerContent: React.SFC<Props> = (props: Props) => {
             );
           })
         ) : (
-          <View />
-        )}
+            <View />
+          )}
       </View>
     </>
   );

@@ -16,6 +16,7 @@ interface Props {
       name: string;
     };
   }>;
+  loading: boolean;
   navigation: NavigationScreenProp<any, any>;
   header: string;
 }
@@ -33,7 +34,7 @@ interface State {
   count: number;
 }
 
-class CollectionPresenter extends React.Component<Props, State> {
+class TypeFlowerPresenter extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = {
@@ -139,4 +140,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default CollectionPresenter;
+export default TypeFlowerPresenter;

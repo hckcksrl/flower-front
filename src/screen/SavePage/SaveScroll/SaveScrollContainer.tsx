@@ -1,12 +1,6 @@
 import React from "react";
 import { MyLibraryResponse } from "../../../types/types";
-import {
-  View,
-  ScrollView,
-  Text,
-  TouchableOpacity,
-  FlatList
-} from "react-native";
+import { View, Text, TouchableOpacity, FlatList } from "react-native";
 import SaveScrollView from "./SaveScrollView";
 import { NavigationScreenProp } from "react-navigation";
 

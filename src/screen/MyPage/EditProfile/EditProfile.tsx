@@ -1,5 +1,5 @@
 import React from "react";
-import { View, TextInput, Alert, StyleSheet } from "react-native";
+import { View, TextInput, Alert, StyleSheet, Text } from "react-native";
 import { Mutation } from "react-apollo";
 import { Button } from "react-native-elements";
 import gql from "graphql-tag";
@@ -7,6 +7,7 @@ import { NavigationScreenProp } from "react-navigation";
 import NavigationHeader from "../../../component/NavigationHeader";
 import { getStatusBarHeight } from "react-native-status-bar-height";
 import { Width } from "../../../helper/Dimension";
+import AsyncStorage from "@react-native-community/async-storage";
 
 interface Props {
   navigation: NavigationScreenProp<any, any>;
@@ -24,23 +25,23 @@ class EditProfile extends React.Component<Props, State> {
     };
   }
 
-  componentWillMount() {
-    this.setState({
-      text: this.props.navigation.getParam("nickname", "default")
-    });
+  async componentWillMount() {
+    const nickname = await AsyncStorage.getItem("nickname");
+    if (nickname) {
+      this.setState({
+        text: nickname
+      });
+    }
   }
 
   _onPress = async EditProfile => {
-    EditProfile({
-      variables: { nickname: this.state.text },
-      refetchQueries: [{ query: GetUser }]
-    }).then(data => {
+    EditProfile({ variables: { nickname: this.state.text } }).then(data => {
       if (data.data.EditProfile.result) {
+        AsyncStorage.removeItem("nickname");
+        AsyncStorage.setItem("nickname", data.data.EditProfile.nickname);
         this.props.navigation.goBack();
       } else {
-        Alert.alert("닉네임이 중복됩니다.", "", [
-          { text: "확인", onPress: () => this.setState({ text: "" }) }
-        ]);
+        Alert.alert("닉네임이 중복됩니다.", "", [{ text: "확인" }]);
       }
     });
   };
@@ -57,13 +58,21 @@ class EditProfile extends React.Component<Props, State> {
                   header={"arrow-left"}
                   navigation={navigation}
                 />
-                <View style={{ marginTop: 100 }}>
+                <View style={{ marginTop: 100, marginHorizontal: 15 }}>
+                  <Text style={{ fontSize: 15 }}>닉네임 : </Text>
                   <TextInput
                     onChangeText={text => {
                       this.setState({ text });
                     }}
                     value={this.state.text}
+                    autoCorrect={false}
+                    style={{
+                      borderWidth: 1,
+                      borderColor: "#e3e3e3",
+                      fontSize: 15
+                    }}
                   />
+
                   <Button
                     title="닉네임 변경"
                     onPress={() => this._onPress(EditProfile)}
@@ -81,15 +90,6 @@ class EditProfile extends React.Component<Props, State> {
 const Edit = gql`
   mutation EditProfile($nickname: String!) {
     EditProfile(nickname: $nickname) {
-      result
-      error
-    }
-  }
-`;
-
-const GetUser = gql`
-  {
-    GetUsers {
       result
       error
       nickname

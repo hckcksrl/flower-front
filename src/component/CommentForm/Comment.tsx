@@ -44,7 +44,11 @@ class Comment extends React.Component<Props> {
       wrapCommentid
     } = this.props;
     return (
-      <Query query={GetInComment} variables={{ id: commentid }}>
+      <Query
+        query={GetInComment}
+        variables={{ id: commentid }}
+        fetchPolicy="network-only"
+      >
         {({ data, loading }) => {
           if (loading) return <View />;
           const comment = data.GetInComment.comment;

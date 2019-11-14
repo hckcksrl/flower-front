@@ -9,8 +9,6 @@ import Library from "../screen/Library/Library";
 import { createSwitchNavigator } from "react-navigation";
 import Login from "../screen/LoginFlow/Login";
 import Profile from "../screen/LoginFlow/Profile";
-import CollectionContainer from "../screen/CollectionFlowers/CollectionFlowersContainer";
-import { View } from "react-native";
 import Check from "../screen/LoginFlow/Check";
 import RecentListContainer from "../screen/RecentList/RecentListContainer";
 import LikeListContainer from "../screen/LikeList/LikeListContainer";
@@ -18,6 +16,8 @@ import SavePageContainer from "../screen/SavePage/SavePageContainer";
 import SaveFlowerContainer from "../screen/SaveFlower/SaveFlowerContainer";
 import MyPage from "../screen/MyPage/MyPage";
 import EditProfile from "../screen/MyPage/EditProfile/EditProfile";
+import QuestionContainer from "../screen/MyPage/Question/QuestionContainer";
+import TypeFlowerContainer from "../screen/TypeFlowers/TypeFlowersContainer";
 
 const LibraryStack = createStackNavigator(
   {
@@ -46,7 +46,7 @@ const LibraryStack = createStackNavigator(
       }
     },
     TypeFlowers: {
-      screen: CollectionContainer,
+      screen: TypeFlowerContainer,
       navigationOptions: {
         header: null
       }
@@ -63,8 +63,8 @@ const LibraryStack = createStackNavigator(
         header: null
       }
     },
-    TalkPage: {
-      screen: View,
+    Question: {
+      screen: QuestionContainer,
       navigationOptions: {
         header: null
       }
@@ -133,7 +133,10 @@ export const TabNavigation = createBottomTabNavigator(
       screen: AuthSwitchNavigator,
       navigationOptions: {
         tabBarLabel: "라이브러리",
-        backgroundColor: "white"
+        backgroundColor: "white",
+        tabBarOnPress: ({ navigation }) => {
+          navigation.navigate("Library");
+        }
       }
     }
   },

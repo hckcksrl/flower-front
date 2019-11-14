@@ -31,7 +31,7 @@ class LikeListContainer extends React.Component<Props, State> {
       return <ActivityIndicator size="large" />;
     }
     return (
-      <Query query={GetUserLike}>
+      <Query query={GetUserLike} fetchPolicy="network-only">
         {({ data, loading }) => {
           if (loading) return <View />;
           return (
